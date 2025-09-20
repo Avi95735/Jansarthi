@@ -515,18 +515,18 @@
     </div>
     <div class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></div>
     <div class="menu" id="menu">
-      <a href="#home"><%= __('Home') %></a>
-      <a href="/userLogin"><%= __('Userlogin') %></a>
-      <a href="/adminLogin"><%= __('Adminlogin') %></a>
-      <a href="#features"><%= __('Features') %></a>
-      <a href="#solutions"><%= __('Solutions') %></a>
-      <a href="/complain"><%= __('Complain') %></a>
-      <a href="/trackStatus"><%= __('Trackstatus') %></a>
-      <a href="#aboutUs"><%= __('Aboutus') %></a>
-      <a href="/emergency"><%= __('Emergency Contact') %></a>
+      <a href="#home" data-translate-key="nav_home">Home</a>
+      <a href="/userLogin" data-translate-key="nav_user_login">User Login</a>
+      <a href="/adminLogin" data-translate-key="nav_admin_login">Admin Login</a>
+      <a href="#features" data-translate-key="nav_features">Features</a>
+      <a href="#solutions" data-translate-key="nav_solutions">Solutions</a>
+      <a href="/complain" data-translate-key="nav_complain">Complain</a>
+      <a href="/trackStatus" data-translate-key="nav_track_status">Track Status</a>
+      <a href="#aboutUs" data-translate-key="nav_about_us">About Us</a>
+      <a href="/emergency" data-translate-key="nav_contact_us">Contact Us</a>
       <a href="fetchDetail" data-translate-key="nav_fetch_detail">Fetch</a>
       <div class="language-selector">
-        <select id="language-switcher" onchange="window.location.href = '?lang=' + this.value">
+        <select id="language-switcher" onchange="changeLanguage(this.value)">
           <option value="en" <%= getLocale() === 'en' ? 'selected' : '' %>>English</option>
           <option value="hi" <%= getLocale() === 'hi' ? 'selected' : '' %>>Hindi</option>
           <option value="bh" <%= getLocale() === 'bh' ? 'selected' : '' %>>Bhojpuri</option>
@@ -552,13 +552,13 @@
   </section>
 
   <section id="home">
-    <h1 data-translate-key="home_welcome"><%= __('JanSaarthi') %></h1>
+    <h1 data-translate-key="home_welcome">Welcome to JanSaarthi</h1>
     <br>
     <h3>Har Awwaz ke saath</h3>
     <br>
     <p data-translate-key="home_tagline">Your one-stop companion platform in disaster.</p>
     <br>
-    <h3 data-translate-key="home_mission_title"><%= __('home_mission_title') %> - Wherever there's need , there's JanSaarthi</h3>
+    <h3 data-translate-key="home_mission_title">JanSaarthi - Wherever there's need , there's JanSaarthi</h3>
     <br>
     <p data-translate-key="home_mission_text">"Our solution delivers a triple impact - socially empowering citizens, economically saving resources, and helping every citizens."</p>
   </section>
@@ -601,8 +601,8 @@
           <p data-translate-key="feature8_desc">Geotags , timestamps , media and community confirmations validate reports.</p>
         </li>
         <li>
-          <h3 data-translate-key="feature4_title"><i class="fa-solid fa-map"></i>Offline & SMS support</h3>
-          <p data-translate-key="feature4_desc">Report even without internet via SMS o r offline app caching. Automatic sync when connectivity returns .</p>
+          <h3 data-translate-key="feature9_title"><i class="fa-solid fa-map"></i>Offline & SMS support</h3>
+          <p data-translate-key="feature9_desc">Report even without internet via SMS o r offline app caching. Automatic sync when connectivity returns .</p>
         </li>
       </ul>
 
@@ -680,7 +680,7 @@
     </div>
   </section>
 
-  <h3 style="color:white;" data-translate-key="datatable_title">Data Table of Complain : </h3>
+  <h3 style="color:white;" data-translate-key="datatable_title">Data Table of Complain :</h3>
   <br>
   <div style="width: 100%; max-width: 1500px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden;">
     <table style="width: 100%; border-collapse: collapse; text-align: center;">
@@ -709,7 +709,7 @@
           <i class="fa-solid fa-people-group"></i>
           <p data-translate-key="about1_desc">JanSaarthi is a citizen-driven disaster reporting platform designed to make communities safer and more resilient.</p>
           <br>
-          <p>
+          <p data-translate-key="about1_mission">
             Our mission is to empower people to report, verify, and respond to disasters oin real-time using text, images, videos, and geolocation.
           </p>
         </div>
@@ -721,8 +721,8 @@
           <i class="fa-solid fa-building-columns"></i>
           <p data-translate-key="about3_desc">On the administrative side, JanSaarthi empowers administrators and disaster management teams to act quickly and efficiently. Through the administrative dashboard , authorities can : </p>
           <br>
-          <h3>Monitor Real-time reports</h3>
-          <h3>verify and Approve Reports</h3>
+          <h3 data-translate-key="about3_point1">Monitor Real-time reports</h3>
+          <h3 data-translate-key="about3_point2">verify and Approve Reports</h3>
         </div>
         <div class="card">
           <i class="fa-solid fa-eye"></i>
@@ -746,14 +746,14 @@
   <div style="max-width:1200px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between;">
 
     <div style="flex:1; min-width:250px; margin:10px;">
-      <h2 style="color:#f4a261; margin-bottom:15px;"><%= __('footer_title') %></h2>
-      <p style="line-height:1.6; font-size:14px;">
+      <h2 style="color:#f4a261; margin-bottom:15px;" data-translate-key="footer_title">JanSaarthi</h2>
+      <p style="line-height:1.6; font-size:14px;" data-translate-key="footer_tagline">
         Empowering citizens with smart solutions for reporting and resolving civic issues efficiently.
       </p>
     </div>
 
     <div style="flex:1; min-width:250px; margin:10px;">
-      <h3 style="color:#f4a261; margin-bottom:15px;"><%= __('footer_links_title') %></h3>
+      <h3 style="color:#f4a261; margin-bottom:15px;" data-translate-key="footer_links_title">Quick Links</h3>
       <ul style="list-style:none; padding:0; font-size:14px;">
         <li style="margin:6px 0;"><a href="#home" style="color:#fff; text-decoration:none;" data-translate-key="nav_home">Home</a></li>
         <li style="margin:6px 0;"><a href="#features" style="color:#fff; text-decoration:none;" data-translate-key="nav_features">Features</a></li>
@@ -775,18 +775,18 @@
 
   <hr style="margin:30px 0; border:0.5px solid #444;">
 
-  <p style="font-size:13px; margin:0;">&copy; 2025 JanSaarthi. All Rights Reserved.</p>
+  <p style="font-size:13px; margin:0;" data-translate-key="footer_copyright">&copy; 2025 JanSaarthi. All Rights Reserved.</p>
 </footer>
 
   <div class="fab-container">
     <a href="/missing-complaint" class="fab-option">
-      <i class="fa-solid fa-person-circle-question"></i>Missing Person
+      <i class="fa-solid fa-person-circle-question"></i><span data-translate-key="fab_missing_person">Missing Person</span>
     </a>
     <a href="/news" class="fab-option">
-      <i class="fa-solid fa-newspaper"></i>News
+      <i class="fa-solid fa-newspaper"></i><span data-translate-key="fab_news">News</span>
     </a>
     <a href="/safety" class="fab-option">
-      <i class="fa-solid fa-shield-halved"></i>Safety Tips
+      <i class="fa-solid fa-shield-halved"></i><span data-translate-key="fab_safety_tips">Safety Tips</span>
     </a>
     <div class="fab-main">
       <i class="fa-solid fa-plus"></i>
@@ -840,36 +840,41 @@
     const translations = {
       en: {
         nav_home: 'Home', nav_user_login: 'User Login', nav_admin_login: 'Admin Login', nav_features: 'Features', nav_solutions: 'Solutions', nav_complain: 'Complain', nav_track_status: 'Track Status', nav_about_us: 'About Us', nav_contact_us: 'Contact Us',
-        home_welcome: 'Welcome to SmartSeva', home_tagline: 'Your one-stop platform for efficient public service solutions.', home_mission_title: 'SmartSeva', home_mission_text: '"Our solution delivers a triple impact - socially empowering citizens, economically saving resources, and environmentally creating cleaner and greener communities."',
-        features_title: '🌐 SmartSeva - Citizen Features',
+        home_welcome: 'Welcome to JanSaarthi', home_tagline: 'Your one-stop companion platform in disaster.', home_mission_title: 'JanSaarthi - Wherever there\'s need , there\'s JanSaarthi', home_mission_text: '"Our solution delivers a triple impact - socially empowering citizens, economically saving resources, and helping every citizens."',
+        features_title: '🌐 JanSaarthi - Citizen Features',
         fab_missing_person: 'Missing Person',
         fab_news: 'News',
         fab_safety_tips: 'Safety Tips',
         nav_my_complaints: 'My Complaints',
-        feature1_title: 'Easy Issue Reporting', feature1_desc: 'Submit complaints with photos, GPS location, text or voice notes.',
+        feature1_title: 'Easy Real time Issue Reporting', feature1_desc: 'Submit complaints with photos, GPS location, text or voice notes.',
         feature2_title: 'Real-Time Location Tagging', feature2_desc: 'Automatic GPS tagging for accurate issue location.',
         feature3_title: 'Multilingual Support', feature3_desc: 'Interface available in multiple languages like English, Hindi, Bengali, etc.',
         feature4_title: 'Interactive Map View', feature4_desc: 'Citizens can see reported issues on a live city map.',
         feature5_title: 'Complaint Tracking', feature5_desc: 'Track complaint status: Submitted → In Progress → Resolved.',
         feature6_title: 'Push Notifications & Alerts', feature6_desc: 'Receive updates about complaint acknowledgment and resolution.',
         feature7_title: 'User-Friendly Mobile Interface', feature7_desc: 'Responsive, mobile-first design compatible with all devices.',
-        solutions_title: 'Solutions Provided by SmartSeva',
-        solution1_title: 'Efficient Civic Issue Reporting', solution1_desc: 'Citizens can submit complaints instantly with photos, videos, and location details. Reduces delays for potholes, broken streetlights, or overflowing trash bins.',
-        solution2_title: 'Real-Time Tracking', solution2_desc: 'Track complaint status from submission to resolution, ensuring transparency and accountability in government response.',
+        feature8_title: 'Verification & Credibility', feature8_desc: 'Geotags , timestamps , media and community confirmations validate reports.',
+        feature9_title: 'Offline & SMS support', feature9_desc: 'Report even without internet via SMS o r offline app caching. Automatic sync when connectivity returns .',
+        solutions_title: 'Solutions Provided by JanSaarthi',
+        solution1_title: 'Real time Incident Reporting', solution1_desc: 'Citizens can submit disaster-related reports via text,images,or videos . Geotag and timestamp ensure accurate location tracking .',
+        solution2_title: 'Community Dashboard', solution2_desc: 'View verified reports on an interactive map and list . Filter by disaster type , urgency , or location .',
         solution3_title: 'Interactive Mapping', solution3_desc: 'Live maps with color-coded markers show reported issues, helping citizens and authorities identify problem hotspots efficiently.',
         solution4_title: 'Multilingual Access', solution4_desc: 'Supports English, Hindi, Bengali, and regional languages, allowing citizens from all backgrounds to report and access services easily.',
         solution5_title: 'Automated Task Routing', solution5_desc: 'Complaints automatically go to the relevant department based on type and location, reducing administrative delays.',
-        solution6_title: 'Analytics and Insights', solution6_desc: 'Government dashboards display trends, response times, and resolution rates to improve service delivery and resource allocation.',
+        solution6_title: 'Community & Administrative tools', solution6_desc: 'Crowd-based confirmation to validate reports quickly . Admin dashboard for moderators to manage, verify, or escalate incidents .',
         solution7_title: 'Mobile & Web Accessibility', solution7_desc: 'Fully responsive web and mobile interface enables citizens to report issues anytime, anywhere.',
-        solution8_title: 'Citizen-Government Collaboration', solution8_desc: 'Citizens can upvote and comment on issues, helping authorities prioritize urgent problems, building trust and transparency.',
+        solution8_title: 'Transparency & Audit Trail', solution8_desc: 'Track who sub,mitted and verified ecah report. Promote accountability and aligns with SDG 16',
         datatable_title: 'Data Table of Complain :', datatable_total: 'Total Received Problems', datatable_solved: 'Solved Problems', datatable_pending: 'Pending Problems',
-        about_title: 'About Us – SmartSeva',
-        about1_desc: 'SmartSeva is a citizen-centric platform designed to bridge the gap between citizens and local government authorities. Our mission is to make civic services transparent, responsive, and efficient.',
-        about2_desc: 'With real-time issue reporting, interactive maps, and multilingual support, SmartSeva empowers citizens to actively participate in building smarter, cleaner, and safer cities.',
-        about3_desc: 'On the administrative side, SmartSeva provides municipal staff and authorities with a centralized dashboard that streamlines complaint management, prioritizes issues, and enhances government accountability.',
-        about4_desc: '<strong>Our Vision:</strong> To create smarter cities where citizens’ voices are heard, and civic issues are resolved quickly and efficiently.',
+        about_title: 'About Us – JanSaarthi',
+        about1_desc: 'JanSaarthi is a citizen-driven disaster reporting platform designed to make communities safer and more resilient.',
+        about1_mission: 'Our mission is to empower people to report, verify, and respond to disasters oin real-time using text, images, videos, and geolocation.',
+        about2_desc: 'With real-time issue reporting, interactive maps, and multilingual support, SmartSeva empowers citizens to actively participate in building smarter, protective, and safer cities.',
+        about3_desc: 'On the administrative side, JanSaarthi empowers administrators and disaster management teams to act quickly and efficiently. Through the administrative dashboard , authorities can : ',
+        about3_point1: 'Monitor Real-time reports',
+        about3_point2: 'verify and Approve Reports',
+        about4_desc: '<strong>Our Vision:</strong>"To build safer, reilient communities by empowering citizens with real-time disaster reporting, verified information, and collaboratyive action ."',
         about5_desc: '<strong>Our Mission:</strong> To empower citizens with an easy-to-use platform for reporting issues while providing governments with tools to improve responsiveness, transparency, and service quality.',
-        footer_title: 'SmartSeva', footer_tagline: 'Empowering citizens with smart solutions for reporting and resolving civic issues efficiently.', footer_links_title: 'Quick Links', footer_copyright: '© 2025 SmartSeva. All Rights Reserved.'
+        footer_title: 'JanSaarthi', footer_tagline: 'Empowering citizens with smart solutions for reporting and resolving civic issues efficiently.', footer_links_title: 'Quick Links', footer_copyright: '© 2025 JanSaarthi. All Rights Reserved.'
       },
       hi: {
         nav_home: 'होम', nav_user_login: 'उपयोगकर्ता लॉगिन', nav_admin_login: 'एडमिन लॉगिन', nav_features: 'विशेषताएँ', nav_solutions: 'समाधान', nav_complain: 'शिकायत करें', nav_track_status: 'स्थिति ट्रैक करें', nav_about_us: 'हमारे बारे में', nav_contact_us: 'संपर्क करें', nav_fetch_detail: 'विवरण प्राप्त करें',
@@ -877,84 +882,37 @@
         fab_news: 'समाचार',
         fab_safety_tips: 'सुरक्षा सुझाव',
         nav_my_complaints: 'मेरी शिकायतें',
-        home_welcome: 'स्मार्टसेवा में आपका स्वागत है', home_tagline: 'कुशल सार्वजनिक सेवा समाधानों के लिए आपका वन-स्टॉप प्लेटफॉर्म।', home_mission_title: 'स्मार्टसेवा', home_mission_text: '" हमारा समाधान तिगुना प्रभाव डालता है - सामाजिक रूप से नागरिकों को सशक्त बनाना, आर्थिक रूप से संसाधनों की बचत करना, और पर्यावरणीय रूप से स्वच्छ और हरित समुदायों का निर्माण करना। "',
-        features_title: '🌐 स्मार्टसेवा - नागरिक सुविधाएँ',
-        feature1_title: 'आसान समस्या रिपोर्टिंग', feature1_desc: 'फोटो, जीपीएस लोकेशन, टेक्स्ट या वॉयस नोट्स के साथ शिकायतें दर्ज करें।',
+        home_welcome: 'जनसारथी में आपका स्वागत है', home_tagline: 'आपदा में आपका वन-स्टॉप साथी मंच।', home_mission_title: 'जनसारथी - जहाँ जरूरत, वहाँ जनसारथी', home_mission_text: '"हमारा समाधान तिगुना प्रभाव डालता है - सामाजिक रूप से नागरिकों को सशक्त बनाना, आर्थिक रूप से संसाधनों की बचत करना, और हर नागरिक की मदद करना। "',
+        features_title: '🌐 जनसारथी - नागरिक सुविधाएँ',
+        feature1_title: 'आसान रियल-टाइम समस्या रिपोर्टिंग', feature1_desc: 'फोटो, जीपीएस लोकेशन, टेक्स्ट या वॉयस नोट्स के साथ शिकायतें दर्ज करें।',
         feature2_title: 'वास्तविक समय लोकेशन टैगिंग', feature2_desc: 'समस्या के सटीक स्थान के लिए स्वचालित जीपीएस टैगिंग।',
         feature3_title: 'बहुभाषी समर्थन', feature3_desc: 'इंटरफ़ेस अंग्रेजी, हिंदी, बंगाली आदि कई भाषाओं में उपलब्ध है।',
         feature4_title: 'इंटरैक्टिव मानचित्र दृश्य', feature4_desc: 'नागरिक रिपोर्ट की गई समस्याओं को शहर के लाइव मानचित्र पर देख सकते हैं।',
         feature5_title: 'शिकायत ट्रैकिंग', feature5_desc: 'शिकायत की स्थिति ट्रैक करें: प्रस्तुत → प्रक्रिया में → हल हो गई।',
         feature6_title: 'पुश सूचनाएं और अलर्ट', feature6_desc: 'शिकायत की पावती और समाधान के बारे में अपडेट प्राप्त करें।',
         feature7_title: 'उपयोगकर्ता-अनुकूल मोबाइल इंटरफ़ेस', feature7_desc: 'सभी उपकरणों के साथ संगत उत्तरदायी, मोबाइल-फर्स्ट डिज़ाइन।',
-        solutions_title: 'स्मार्टसेवा द्वारा प्रदान किए गए समाधान',
-        solution1_title: 'कुशल नागरिक समस्या रिपोर्टिंग', solution1_desc: 'नागरिक फोटो, वीडियो और स्थान विवरण के साथ तुरंत शिकायतें दर्ज कर सकते हैं। गड्ढों, टूटी स्ट्रीटलाइट्स, या कचरे के डिब्बे भरने में देरी कम करता है।',
-        solution2_title: 'वास्तविक समय ट्रैकिंग', solution2_desc: 'प्रस्तुत करने से लेकर समाधान तक शिकायत की स्थिति को ट्रैक करें, जिससे सरकारी प्रतिक्रिया में पारदर्शिता और जवाबदेही सुनिश्चित होती है।',
+        feature8_title: 'सत्यापन और विश्वसनीयता', feature8_desc: 'जियोटैग, टाइमस्टैम्प, मीडिया और सामुदायिक पुष्टि रिपोर्ट को मान्य करती है।',
+        feature9_title: 'ऑफ़लाइन और एसएमएस समर्थन', feature9_desc: 'एसएमएस या ऑफ़लाइन ऐप कैशिंग के माध्यम से इंटरनेट के बिना भी रिपोर्ट करें। कनेक्टिविटी वापस आने पर स्वचालित सिंक।',
+        solutions_title: 'जनसारथी द्वारा प्रदान किए गए समाधान',
+        solution1_title: 'रियल-टाइम घटना रिपोर्टिंग', solution1_desc: 'नागरिक पाठ, छवियों या वीडियो के माध्यम से आपदा से संबंधित रिपोर्ट प्रस्तुत कर सकते हैं। जियोटैग और टाइमस्टैम्प सटीक स्थान ट्रैकिंग सुनिश्चित करते हैं।',
+        solution2_title: 'सामुदायिक डैशबोर्ड', solution2_desc: 'एक इंटरैक्टिव मानचित्र और सूची पर सत्यापित रिपोर्ट देखें। आपदा के प्रकार, तात्कालिकता या स्थान के अनुसार फ़िल्टर करें।',
         solution3_title: 'इंटरैक्टिव मैपिंग', solution3_desc: 'रंग-कोडित मार्करों वाले लाइव नक्शे रिपोर्ट की गई समस्याओं को दिखाते हैं, जिससे नागरिकों और अधिकारियों को समस्या वाले हॉटस्पॉट की पहचान करने में मदद मिलती है।',
         solution4_title: 'बहुभाषी पहुंच', solution4_desc: 'अंग्रेजी, हिंदी, बंगाली और क्षेत्रीय भाषाओं का समर्थन करता है, जिससे सभी पृष्ठभूमि के नागरिक आसानी से रिपोर्ट कर सकते हैं और सेवाओं तक पहुंच सकते हैं।',
         solution5_title: 'स्वचालित कार्य रूटिंग', solution5_desc: 'शिकायतें प्रकार और स्थान के आधार पर स्वचालित रूप से संबंधित विभाग को चली जाती हैं, जिससे प्रशासनिक देरी कम होती है।',
-        solution6_title: 'विश्लेषिकी और अंतर्दृष्टि', solution6_desc: 'सरकारी डैशबोर्ड सेवा वितरण और संसाधन आवंटन में सुधार के लिए रुझान, प्रतिक्रिया समय और समाधान दर प्रदर्शित करते हैं।',
+        solution6_title: 'सामुदायिक और प्रशासनिक उपकरण', solution6_desc: 'रिपोर्टों को जल्दी से मान्य करने के लिए भीड़-आधारित पुष्टि। घटनाओं को प्रबंधित करने, सत्यापित करने या बढ़ाने के लिए मॉडरेटर के लिए व्यवस्थापक डैशबोर्ड।',
         solution7_title: 'मोबाइल और वेब पहुंच', solution7_desc: 'पूरी तरह से उत्तरदायी वेब और मोबाइल इंटरफ़ेस नागरिकों को कभी भी, कहीं भी समस्याओं की रिपोर्ट करने में सक्षम बनाता है।',
-        solution8_title: 'नागरिक-सरकार सहयोग', solution8_desc: 'नागरik मुद्दों पर वोट और टिप्पणी कर सकते हैं, जिससे अधिकारियों को तत्काल समस्याओं को प्राथमिकता देने में मदद मिलती है, विश्वास और पारदर्शिता का निर्माण होता है।',
+        solution8_title: 'पारदर्शिता और ऑडिट ट्रेल', solution8_desc: 'ट्रैक करें कि किसने प्रत्येक रिपोर्ट प्रस्तुत और सत्यापित की है। जवाबदेही को बढ़ावा दें और एसडीजी 16 के साथ संरेखित करें',
         datatable_title: 'शिकायत की डेटा तालिका:', datatable_total: 'कुल प्राप्त समस्याएं', datatable_solved: 'हल की गई समस्याएं', datatable_pending: 'लंबित समस्याएं',
-        about_title: 'हमारे बारे में – स्मार्टसेवा',
-        about1_desc: 'स्मार्टसेवा एक नागरिक-केंद्रित मंच है जिसे नागरिकों और स्थानीय सरकारी अधिकारियों के बीच की खाई को पाटने के लिए डिज़ाइन किया गया है। हमारा मिशन नागरिक सेवाओं को पारदर्शी, उत्तरदायी और कुशल बनाना है।',
-        about2_desc: 'वास्तविक समय में समस्या रिपोर्टिंग, इंटरेक्टिव मैप्स और बहुभाषी समर्थन के साथ, स्मार्टसेवा नागरिकों को होशियार, स्वच्छ और सुरक्षित शहरों के निर्माण में सक्रिय रूप से भाग लेने के लिए सशक्त बनाता है।',
-        about3_desc: 'प्रशासनिक पक्ष में, स्मार्टसेवा नगरपालिका के कर्मचारियों और अधिकारियों को एक केंद्रीकृत डैशबोर्ड प्रदान करता है जो शिकायत प्रबंधन को सुव्यवस्थित करता है, मुद्दों को प्राथमिकता देता है, और सरकारी जवाबदेhi बढ़ाता है।',
-        about4_desc: '<strong>हमारा दृष्टिकोण:</strong> ऐसे स्मार्ट शहर बनाना जहां नागरिकों की आवाज सुनी जाए, और नागरिक मुद्दों का त्वरित और कुशलता से समाधान हो।',
+        about_title: 'हमारे बारे में – जनसारथी',
+        about1_desc: 'जनसारथी एक नागरिक-संचालित आपदा रिपोर्टिंग मंच है जिसे समुदायों को सुरक्षित और अधिक लचीला बनाने के लिए डिज़ाइन किया गया है।',
+        about1_mission: 'हमारा मिशन लोगों को पाठ, छवियों, वीडियो और जियोलोकेशन का उपयोग करके वास्तविक समय में आपदाओं की रिपोर्ट करने, सत्यापित करने और प्रतिक्रिया देने के लिए सशक्त बनाना है।',
+        about2_desc: 'वास्तविक समय में समस्या रिपोर्टिंग, इंटरेक्टिव मैप्स और बहुभाषी समर्थन के साथ, स्मार्टसेवा नागरिकों को होशियार, सुरक्षात्मक और सुरक्षित शहरों के निर्माण में सक्रिय रूप से भाग लेने के लिए सशक्त बनाता है।',
+        about3_desc: 'प्रशासनिक पक्ष में, जनसारथी प्रशासकों और आपदा प्रबंधन टीमों को जल्दी और कुशलता से कार्य करने के लिए सशक्त बनाता है। प्रशासनिक डैशबोर्ड के माध्यम से, अधिकारी कर सकते हैं:',
+        about3_point1: 'वास्तविक समय की रिपोर्ट की निगरानी करें',
+        about3_point2: 'रिपोर्ट सत्यापित और स्वीकृत करें',
+        about4_desc: '<strong>हमारा दृष्टिकोण:</strong>"वास्तविक समय में आपदा रिपोर्टिंग, सत्यापित जानकारी और सहयोगी कार्रवाई के साथ नागरिकों को सशक्त बनाकर सुरक्षित, लचीला समुदायों का निर्माण करना। "',
         about5_desc: '<strong>हमारा मिशन:</strong> नागरिकों को मुद्दों की रिपोर्टिंग के लिए एक उपयोग में आसान मंच के साथ सशक्त बनाना, जबकि सरकारों को जवाबदेही, पारदर्शिता और सेवा की गुणवत्ता में सुधार के लिए उपकरण प्रदान करना।',
-        footer_title: 'स्मार्टसेवा', footer_tagline: 'नागरिकों को नागरिक मुद्दों की रिपोर्टिंग और समाधान के लिए स्मार्ट समाधानों के साथ सशक्त बनाना।', footer_links_title: 'त्वरित लिंक्स', footer_copyright: '© 2025 स्मार्टसेवा। सर्वाधिकार सुरक्षित।'
-      },
-      bh: {
-        nav_home: 'घर', nav_user_login: 'यूजर लॉगिन', nav_admin_login: 'एडमिन लॉगिन', nav_features: 'विशेषता', nav_solutions: 'समाधान', nav_complain: 'शिकायत करीं', nav_track_status: 'स्थिति ट्रैक करीं', nav_about_us: 'हमनी के बारे में', nav_contact_us: 'संपर्क करीं', nav_fetch_detail: 'विवरण ले आईं',
-        fab_missing_person: 'गुमशुदा आदमी',
-        fab_news: 'खबर',
-        fab_safety_tips: 'सुरक्षा सुझाव',
-        nav_my_complaints: 'हमर शिकायत',
-        home_welcome: 'स्मार्टसेवा में राउर स्वागत बा', home_tagline: 'कुशल सार्वजनिक सेवा समाधान खातिर राउर वन-स्टॉप प्लेटफॉर्म।', home_mission_title: 'स्मार्टसेवा', home_mission_text: '"हमनी के समाधान तिगुना असर डाले ला - सामाजिक रूप से नागरिकन के मजबूत बनावेला, आर्थिक रूप से संसाधन बचावेला, अउरी पर्यावरण के हिसाब से साफ-सुथरा अउरी हरियर समुदाय बनावेला।"',
-        features_title: '🌐 स्मार्टसेवा - नागरिक सुविधा',
-        feature1_title: 'आसान समस्या रिपोर्टिंग', feature1_desc: 'फोटो, जीपीएस लोकेशन, टेक्स्ट भा वॉयस नोट के साथ शिकायत भेजीं।',
-        feature2_title: 'रियल-टाइम लोकेशन टैगिंग', feature2_desc: 'समस्या के सही जगह खातिर ऑटोमेटिक जीपीएस टैगिंग।',
-        feature3_title: 'बहुभाषी सहायता', feature3_desc: 'इंटरफेस कई भाषा जइसे कि अंग्रेजी, हिंदी, बंगाली आदि में उपलब्ध बा।',
-        feature4_title: 'इंटरैक्टिव नक्शा', feature4_desc: 'नागरिक रिपोर्ट कइल गइल समस्या के शहर के लाइव नक्शा पर देख सकेलें।',
-        feature5_title: 'शिकायत ट्रैकिंग', feature5_desc: 'शिकायत के स्थिति ट्रैक करीं: भेजल गइल → काम जारी बा → समाधान हो गइल।',
-        feature6_title: 'पुश सूचना आ अलर्ट', feature6_desc: 'शिकायत के स्वीकार होखला आ समाधान के बारे में अपडेट पाईं।',
-        feature7_title: 'यूजर-फ्रेंडली मोबाइल इंटरफेस', feature7_desc: 'सभ डिवाइस के साथ संगत, रिस्पॉन्सिव, मोबाइल-फर्स्ट डिजाइन।',
-        solutions_title: 'स्मार्टसेवा द्वारा दिहल गइल समाधान',
-        about_title: 'हमनी के बारे में – स्मार्टसेवा',
-        footer_title: 'स्मार्टसेवा', footer_tagline: 'नागरिकन के नागरिक समस्या के रिपोर्टिंग आ समाधान खातिर स्मार्ट समाधान से सशक्त बनावल।', footer_links_title: 'तुरंत लिंक', footer_copyright: '© 2025 स्मार्टसेवा। सभे अधिकार सुरक्षित बा।'
-      },
-      bn: {
-        nav_home: 'হোম', nav_user_login: 'ব্যবহারকারী লগইন', nav_admin_login: 'অ্যাডমিন লগইন', nav_features: 'বৈশিষ্ট্য', nav_solutions: 'সমাধান', nav_complain: 'অভিযোগ', nav_track_status: 'স্ট্যাটাস ট্র্যাক', nav_about_us: 'আমাদের সম্পর্কে', nav_contact_us: 'যোগাযোগ', nav_fetch_detail: 'বিবরণ আনুন',
-        fab_missing_person: 'নিখোঁজ ব্যক্তি',
-        fab_news: 'খবর',
-        fab_safety_tips: 'নিরাপত্তা টিপস',
-        nav_my_complaints: 'আমার অভিযোগ',
-        home_welcome: 'স্মার্টসেবায় স্বাগতম', home_tagline: 'দক্ষ পাবলিক সার্ভিস সমাধানের জন্য আপনার ওয়ান-স্টপ প্ল্যাটফর্ম।', home_mission_title: 'স্মার্টসেবা', home_mission_text: '"আমাদের সমাধান একটি ত্রিগুণ প্রভাব ফেলে - সামাজিকভাবে নাগরিকদের ক্ষমতায়ন, অর্থনৈতিকভাবে সম্পদ সংরক্ষণ এবং পরিবেশগতভাবে পরিষ্কার এবং সবুজ সম্প্রদায় তৈরি করা।"',
-        features_title: '🌐 স্মার্টসেবা - নাগরিক বৈশিষ্ট্য',
-        feature1_title: 'সহজ সমস্যা রিপোর্টিং', feature1_desc: 'ছবি, জিপিএস অবস্থান, পাঠ্য বা ভয়েস নোট সহ অভিযোগ জমা দিন।',
-        feature2_title: 'রিয়েল-টাইম লোকেশন ট্যাগিং', feature2_desc: 'সঠিক সমস্যার অবস্থানের জন্য স্বয়ংক্রিয় জিপিএস ট্যাগিং।',
-        feature3_title: 'বহুভাষিক সমর্থন', feature3_desc: 'ইন্টারফেস ইংরেজি, হিন্দি, বাংলা ইত্যাদি একাধিক ভাষায় উপলব্ধ।',
-        feature4_title: 'ইন্টারেক্টিভ ম্যাপ ভিউ', feature4_desc: 'নাগরিকরা একটি লাইভ শহরের মানচিত্রে রিপোর্ট করা সমস্যা দেখতে পারেন।',
-        feature5_title: 'অভিযোগ ট্র্যাকিং', feature5_desc: 'অভিযোগের স্থিতি ট্র্যাক করুন: জমা দেওয়া → প্রক্রিয়াধীন → সমাধান হয়েছে।',
-        feature6_title: 'পুশ বিজ্ঞপ্তি এবং সতর্কতা', feature6_desc: 'অভিযোগের স্বীকৃতি এবং সমাধান সম্পর্কে আপডেট পান।',
-        feature7_title: 'ব্যবহারকারী-বান্ধব মোবাইল ইন্টারফেস', feature7_desc: 'সমস্ত ডিভাইসের সাথে সামঞ্জস্যপূর্ণ প্রতিক্রিয়াশীল, মোবাইল-প্রথম ডিজাইন।',
-        solutions_title: 'স্মার্টসেবা দ্বারা প্রদত্ত সমাধান',
-        solution1_title: 'দক্ষ নাগরিক সমস্যা রিপোর্টিং', solution1_desc: 'নাগরিকরা ছবি, ভিডিও এবং অবস্থানের বিবরণ সহ অবিলম্বে অভিযোগ জমা দিতে পারেন। গর্ত, ভাঙা রাস্তার আলো, বা উপচে পড়া আবর্জনার डिब्बेর জন্য বিলম্ব কমায়।',
-        solution2_title: 'রিয়েল-টাইম ট্র্যাকিং', solution2_desc: 'জমা দেওয়া থেকে সমাধান পর্যন্ত অভিযোগের স্থিতি ট্র্যাক করুন, सरकारी प्रतिक्रियाয় স্বচ্ছতা এবং জবাবদিহিতা নিশ্চিত করে।',
-        solution3_title: 'ইন্টারেক্টিভ ম্যাপিং', solution3_desc: 'রঙ-কোডেড মার্কার সহ লাইভ মানচিত্র রিপোর্ট করা সমস্যাগুলি দেখায়, যা नागरिक এবং কর্তৃপক্ষকে দক্ষতার সাথে সমস্যার হটস্পট সনাক্ত করতে সহায়তা করে।',
-        solution4_title: 'বহুভাষিক অ্যাক্সেস', solution4_desc: 'ইংরেজি, হিন্দি, বাংলা এবং আঞ্চলিক ভাষা সমর্থন করে, যা সমস্ত الخلفيةর নাগরিকদের সহজেই পরিষেবাগুলি রিপোর্ট করতে এবং অ্যাক্সেস করতে দেয়।',
-        solution5_title: 'স্বয়ংক্রিয় টাস্ক রাউটিং', solution5_desc: 'অভিযোগগুলি স্বয়ংক্রিয়ভাবে ধরণ এবং অবস্থানের ভিত্তিতে संबंधित বিভাগে চলে যায়, প্রশাসনিক বিলম্ব হ্রাস করে।',
-        solution6_title: 'বিশ্লেষণ এবং অন্তর্দৃষ্টি', solution6_desc: 'সরকারি ড্যাশবোর্ডগুলি পরিষেবা সরবরাহ এবং সম্পদ বরাদ্দ উন্নত করতে প্রবণতা, প্রতিক্রিয়া সময় এবং সমাধানের হার প্রদর্শন করে।',
-        solution7_title: 'মোবাইল ও ওয়েব অ্যাক্সেসিবিলিটি', solution7_desc: 'সম্পূর্ণ প্রতিক্রিয়াশীল ওয়েব এবং মোবাইল ইন্টারফেস নাগরিকদের যে কোনও সময়, যে কোনও জায়গায় સમસ્યા রিপোর্ট করতে সক্ষম করে।',
-        solution8_title: 'নাগরিক-সরকার সহযোগিতা', solution8_desc: 'নাগরিকরা সমস্যাগুলিতে ভোট দিতে এবং মন্তব্য করতে পারে, যা কর্তৃপক্ষকে জরুরি সমস্যাগুলিকে অগ্রাধিকার দিতে, বিশ্বাস এবং স্বচ্ছতা তৈরি করতে সহায়তা করে।',
-        datatable_title: 'অভিযোগের ডেটা টেবিল:', datatable_total: 'মোট প্রাপ্ত সমস্যা', datatable_solved: 'সমাধান করা সমস্যা', datatable_pending: 'মুলতুবি সমস্যা',
-        about_title: 'আমাদের সম্পর্কে – স্মার্টসেবা',
-        about1_desc: 'স্মার্টসেবা একটি নাগরিক-কেন্দ্রিক প্ল্যাটফর্ম যা नागरिक এবং স্থানীয় सरकारी কর্তৃপক্ষের মধ্যে ব্যবধান পূরণ করার জন্য ডিজাইন করা হয়েছে। আমাদের লক্ষ্য হল নাগরিক পরিষেবাগুলিকে স্বচ্ছ, প্রতিক্রিয়াশীল এবং দক্ষ করে তোলা।',
-        about2_desc: 'রিয়েল-টাইম সমস্যা রিপোর্টিং, ইন্টারেক্টিভ মানচিত্র এবং বহুভাষিক সমর্থনের সাথে, স্মার্টসেবা নাগরিকদের স্মার্ট, পরিষ্কার এবং নিরাপদ শহর তৈরিতে সক্রিয়ভাবে অংশগ্রহণ করতে सशक्त করে।',
-        about3_desc: 'প্রশাসনিক দিকে, স্মার্টসেবা পৌরসভা कर्मचारी এবং কর্তৃপক্ষকে একটি কেন্দ্রীভূত ড্যাশবোর্ড সরবরাহ করে যা অভিযোগ পরিচালনাকে सुव्यवस्थित করে, সমস্যাগুলিকে অগ্রাধিকার দেয় এবং सरकारी জবাবদিহিতা বাড়ায়।',
-        about4_desc: '<strong>আমাদের দৃষ্টি:</strong> এমন স্মার্ট শহর তৈরি করা যেখানে নাগরিকদের কথা শোনা হয় এবং নাগরিক সমস্যাগুলি দ্রুত এবং দক্ষতার সাথে সমাধান করা হয়।',
-        about5_desc: '<strong>আমাদের লক্ষ্য:</strong> নাগরিকদের সমস্যা রিপোর্টিংয়ের জন্য একটি সহজে ব্যবহারযোগ্য প্ল্যাটফর্ম দিয়ে सशक्त করা, அதே সময়ে সরকারকে প্রতিক্রিয়াশীলতা, স্বচ্ছতা এবং পরিষেবার মান উন্নত করার জন্য সরঞ্জাম সরবরাহ করা।',
-        footer_title: 'স্মার্টসেবা', footer_tagline: 'নাগরিকদের নাগরিক সমস্যা রিপোর্টিং এবং সমাধানের জন্য স্মার্ট সমাধান দিয়ে ক্ষমতায়ন করা।', footer_links_title: 'দ্রুত লিঙ্ক', footer_copyright: '© 2025 স্মার্টসেবা। সর্বস্বত্ব সংরক্ষিত।'
+        footer_title: 'जनसारथी', footer_tagline: 'नागरिकों को नागरिक मुद्दों की रिपोर्टिंग और समाधान के लिए स्मार्ट समाधानों के साथ सशक्त बनाना।', footer_links_title: 'त्वरित लिंक्स', footer_copyright: '© 2025 जनसारथी। सर्वाधिकार सुरक्षित।'
       }
     }
     
@@ -975,6 +933,14 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Get the current locale from the server
+        const lang = '<%= getLocale() %>';
+        const switcher = document.getElementById('language-switcher');
+        
+        // Set the dropdown to the current language and apply translations
+        if (switcher) switcher.value = lang;
+        if (typeof changeLanguage === 'function') changeLanguage(lang);
+
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('login') === 'success') {
             alert('Login Successful!');
