@@ -1,3 +1,5 @@
+require("dotenv").config(); 
+
 const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
@@ -8,16 +10,15 @@ const { v4: uuidv4 } = require("uuid");
 const i18n = require("i18n");
 
 const app = express();
-const PORT = 4087;
-
+const PORT = process.env.PORT || 4087;
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "test",
-  password: "Ask9572@",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  // Or simply: connectionString: process.env.DATABASE_URL
 });
-
 pool.connect()
   .then(() => console.log("✅ Connected to PostgreSQL"))
   .catch(err => console.error("❌ DB connection error:", err));
@@ -528,3 +529,4 @@ app.get("/missing-persons", async (req, res) => {
 ensureTables().then(() => {
   app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
 });
+
