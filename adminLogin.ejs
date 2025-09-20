@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+body{margin:0;height:100vh;background:linear-gradient(270deg,#667eea,#764ba2,#f7971e,#ffd200);background-size:800% 800%;animation:gradientShift 15s ease infinite;display:flex;justify-content:center;align-items:center;font-family:Poppins,sans-serif} 
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{background:#fff;padding:40px 30px;border-radius:20px;max-width:420px;width:100%;box-shadow:0 15px 40px rgba(0,0,0,0.3)}
+h2{text-align:center;margin-bottom:25px;color:#333}
+.input-group{margin-bottom:20px;position:relative}
+.input-group i{position:absolute;top:13px;left:12px;color:#777;font-size:16px}
+input{width:100%;padding:10px 10px 10px 38px;border:2px solid #ccc;border-radius:12px;font-size:15px;outline:none;background:#f9f9f9;color:#333;box-sizing:border-box;transition:.3s}
+input:focus{border-color:#667eea;box-shadow:0 0 8px rgba(102,126,234,0.6)}
+label{position:absolute;top:12px;left:40px;font-size:14px;color:#0e0101;background:white;padding:0 4px;transition:.3s ease;pointer-events:none}
+input:focus + label,input:not(:placeholder-shown) + label{top:-10px;left:35px;font-size:12px;color:#667eea}
+.captcha-block{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.captcha-code{padding:10px 14px;background:#f0f0f0;font-family:monospace;letter-spacing:3px;border-radius:6px;font-weight:bold;font-size:16px;text-align:center}
+.refresh{cursor:pointer;color:#667eea;font-size:20px;transition:transform .3s}
+.refresh:hover{transform:rotate(180deg)}
+button{width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:14px;font-size:16px;cursor:pointer;margin-top:10px}
+button:hover{transform:scale(1.05)}
+.success{margin-top:15px;text-align:center;color:green;font-weight:bold;display:none}
+.back-home{margin-top:15px;display:block;text-align:center;text-decoration:none;font-weight:bold;color:#667eea}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Admin Login</h2>
+
+<% if (message) { %>
+<p style="color:red;text-align:center;"><%= message %></p>
+<% } %>
+
+<form id="adminLoginForm" action="/verify-admin-otp" method="POST" onsubmit="return validateForm(event)">
+<div class="input-group">
+<i class="fas fa-user"></i>
+<input type="text" id="name" name="name" placeholder=" " required>
+<label for="name">Full Name</label>
+</div>
+<div class="input-group">
+<i class="fas fa-building"></i>
+<input type="text" id="department_name" name="department_name" placeholder=" " required>
+<label for="department_name">Department Name</label>
+</div>
+<div class="input-group">
+<i class="fas fa-id-badge"></i>
+<input type="text" id="department_id" name="department_id" placeholder=" " required>
+<label for="department_id">Department ID</label>
+</div>
+
+<div class="input-group">
+<i class="fas fa-mobile-alt"></i>
+<input type="tel" id="mobile_no" name="mobile_no" placeholder=" " required pattern="[0-9]{10}">
+<label for="mobile_no">Mobile No</label>
+</div>
+
+<button type="button" id="generateOtpBtn">Generate OTP</button>
+
+<div class="input-group">
+<i class="fas fa-key"></i>
+<input type="text" id="otpInput" name="otpInput" placeholder=" " required>
+<label for="otpInput">Enter OTP</label>
+</div>
+
+<div class="captcha-block">
+<div class="captcha-code" id="captchaDisplay"></div>
+<i class="fas fa-sync-alt refresh" id="refreshCaptcha"></i>
+</div>
+
+<div class="input-group">
+<i class="fas fa-shield-alt"></i>
+<input type="text" id="captchaInput" placeholder=" " required>
+<label for="captchaInput">Enter Captcha</label>
+</div>
+
+<button type="submit">Login</button>
+<a href="/" class="back-home">⬅ Back to Home</a>
+</form>
+</div>
+
+<script>
+const otpInput = document.getElementById('otpInput');
+const captchaInput = document.getElementById('captchaInput');
+const captchaDisplay = document.getElementById('captchaDisplay');
+const generateOtpBtn = document.getElementById('generateOtpBtn');
+const form = document.getElementById('adminLoginForm');
+let currentOTP = '';
+let currentCaptcha = '';
+
+function generateCaptcha(){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';let code='';for(let i=0;i<5;i++){code+=chars.charAt(Math.floor(Math.random()*chars.length))}return code}
+function refreshCaptchaCode(){currentCaptcha=generateCaptcha();captchaDisplay.textContent=currentCaptcha}
+refreshCaptchaCode();
+document.getElementById('refreshCaptcha').addEventListener('click',refreshCaptchaCode);
+
+generateOtpBtn.addEventListener('click', async ()=>{
+const name=document.getElementById('name').value;
+const department_name=document.getElementById('department_name').value;
+const department_id=document.getElementById('department_id').value;
+const mobile_no=document.getElementById('mobile_no').value;
+if(!name||!department_name||!department_id||!mobile_no){alert('Please fill all fields first.');return;}
+try{
+const res=await fetch('/adminLogin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,department_name,department_id, mobile_no})});
+const data=await res.json();
+if(data.success){currentOTP=data.otp;alert(`OTP generated: ${data.otp}`)}else{alert(`Error: ${data.message}`)}
+}catch(error){alert('An error occurred while requesting the OTP. Please try again.');console.error(error);}
+});
+
+function validateForm(e) {
+  const enteredOTP = otpInput.value.trim();
+  const enteredCaptcha = captchaInput.value.trim();
+  if (!currentOTP) { alert("Generate OTP first."); e.preventDefault(); return false; }
+  if (enteredOTP !== currentOTP) { alert("Invalid OTP"); e.preventDefault(); return false; }
+  if (enteredCaptcha.toLowerCase() !== currentCaptcha.toLowerCase()) { alert("Invalid captcha"); refreshCaptchaCode(); captchaInput.value = ''; e.preventDefault(); return false; }
+  return true;
+}
+</script>
+</body>
+</html>

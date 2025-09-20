@@ -1,0 +1,133 @@
+
+</html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints Map View</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+  <style>
+    body { margin: 0; padding: 0; font-family: sans-serif; }
+    #map { height: 100vh; width: 100%; }
+    .leaflet-popup-content-wrapper {
+      border-radius: 8px;
+    }
+    .leaflet-popup-content {
+      font-size: 14px;
+    }
+    .leaflet-popup-content strong {
+      color: #667eea;
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const map = L.map('map').setView([20.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const greenIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+    
+    const redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const yellowIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+    
+    // Function to get the right icon based on complaint status
+    function getIconForStatus(status) {
+      switch (status) {
+        case 'Resolved':
+          return greenIcon; // Green for resolved complaints
+        case 'Submitted':
+        default:
+          return redIcon;     // Red for submitted and all other non-resolved complaints
+      }
+    }
+
+    // Safely get complaint data from the server by parsing the JSON from a dedicated script tag.
+    // This prevents Cross-Site Scripting (XSS) vulnerabilities.
+    const complaintsJSON = document.getElementById('complaints-data').textContent;
+    const complaints = JSON.parse(complaintsJSON);
+
+    // Parse location string to [lat, lng]
+    function parseLocation(locationStr) {
+      if (!locationStr) return null;
+
+      // Format: "Lat: 12.345, Lng: 67.890"
+      let match = locationStr.match(/Lat:?\s*(-?\d+\.?\d*),\s*Lng:?\s*(-?\d+\.?\d*)/);
+      if (match && match.length === 3) {
+        return [parseFloat(match[1]), parseFloat(match[2])];
+      }
+
+      // Format: "12.345,67.890"
+      match = locationStr.split(',');
+      if (match.length === 2 && !isNaN(match[0]) && !isNaN(match[1])) {
+        return [parseFloat(match[0]), parseFloat(match[1])];
+      }
+
+      return null;
+    }
+
+    complaints.forEach(complaint => {
+      const coords = parseLocation(complaint.location);
+
+      if (coords) {
+        const icon = getIconForStatus(complaint.status);
+        const popupContent = `
+          <strong>${complaint.case_id}</strong>
+          ${complaint.subject || 'No Subject'}<br>
+          <small>Status: ${complaint.status || 'N/A'}</small>
+        `;
+        L.marker(coords, { icon: icon }).addTo(map)
+          .bindPopup(popupContent);
+      } else {
+        console.warn(`Could not parse location for case ${complaint.case_id}:`, complaint.location);
+      }
+    });
+
+    });
+  </script>
+
+  <script type="application/json" id="complaints-data">
+    <%- JSON.stringify(complaints || []) %>
+  </script>
+</body>
+</html> 

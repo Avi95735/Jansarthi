@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missing Person Complaint</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    /* General Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    body, html {
+        height: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+    body {
+        background: linear-gradient(135deg, #141e30, #243b55);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* 3D Animated Background */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, #2c3e50, #141e30);
+        animation: rotate 30s linear infinite;
+        z-index: -1;
+        transform-origin: center;
+    }
+    @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Container */
+    .container {
+        width: 100%;
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        backdrop-filter: blur(8px);
+        overflow-y: auto;
+        max-height: 90vh;
+        animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+
+    h1 {
+        text-align: center;
+        color: #ffd700;
+        margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #fff;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border: 2px solid #ddd;
+        font-size: 14px;
+        background: rgba(20, 30, 48, 0.9);
+        color: #fff;
+        transition: all 0.3s ease;
+        resize: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #ffd700;
+        box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        outline: none;
+    }
+
+    option {
+        background: #141e30;
+        color: #fff;
+    }
+
+    /* Buttons */
+    .submit-btn {
+        padding: 14px;
+        background: #ffd700;
+        color: #141e30;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.3s;
+    }
+
+    .submit-btn:hover {
+        transform: scale(1.05);
+        background: #ffc107;
+    }
+
+    /* Upload Preview */
+    .preview {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    .preview img, .preview video {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 2px solid #ddd;
+    }
+
+    /* Microphone Icon */
+    .mic-icon {
+        position: absolute;
+        right: 12px;
+        top: 38px;
+        font-size: 20px;
+        color: #ffd700;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .mic-icon:hover { transform: scale(1.2); }
+
+    /* Scrollbar */
+    .container::-webkit-scrollbar {
+        width: 8px;
+    }
+    .container::-webkit-scrollbar-thumb {
+        background: #ffd700;
+        border-radius: 10px;
+    }
+    .container::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🔍 Missing Person Complaint</h1>
+    <form id="missingForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="lastSeen">Last Seen Date:</label>
+        <input type="date" id="lastSeen" name="lastSeen" required>
+
+        <label for="location">Last Seen Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="description">Additional Details:</label>
+        <textarea id="description" name="description" rows="4" placeholder="Describe any important details..."></textarea>
+
+        <label>Upload Photo or Video:</label>
+        <input type="file" id="media" name="media" accept="image/*,video/*" style="display:none;">
+        <button type="button" class="submit-btn" onclick="document.getElementById('media').click()">📷🎥 Upload Media</button>
+        <div class="preview" id="preview"></div>
+
+        <button type="submit" class="submit-btn">Submit Complaint</button>
+
+        <div id="msg" style="margin-top: 15px; font-weight: 600; text-align: center; padding: 10px; border-radius: 8px; display: none;"></div>
+
+        <label for="reporter_mobile">Your Mobile Number:</label>
+        <input type="tel" id="reporter_mobile" name="reporter_mobile" pattern="[0-9]{10}" required>
+    </form>
+</div>
+
+<script>
+    // Media preview
+    document.getElementById("media").addEventListener("change", function(event) {
+        const preview = document.getElementById("preview");
+        preview.innerHTML = "";
+        const file = event.target.files[0];
+        if(!file) return;
+
+        if(file.type.startsWith("image/")) {
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            preview.appendChild(img);
+        } else if(file.type.startsWith("video/")) {
+            const video = document.createElement("video");
+            video.src = URL.createObjectURL(file);
+            video.controls = true;
+            preview.appendChild(video);
+        }
+    });
+
+    // Form submit
+    document.getElementById("missingForm").addEventListener("submit", async function(e){
+        e.preventDefault();
+        const msgDiv = document.getElementById("msg");
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Manually append form fields to FormData
+        formData.append('name', document.getElementById('name').value);
+        formData.append('age', document.getElementById('age').value);
+        formData.append('gender', document.getElementById('gender').value);
+        formData.append('lastSeen', document.getElementById('lastSeen').value);
+        formData.append('location', document.getElementById('location').value);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('reporter_mobile', document.getElementById('reporter_mobile').value);
+        // The file is already appended if selected
+
+        msgDiv.style.display = 'block';
+        msgDiv.style.color = '#ffd700';
+        msgDiv.innerText = "⏳ Submitting...";
+
+        try {
+            const response = await fetch('/submit-missing-person', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                msgDiv.style.color = '#4caf50';
+                msgDiv.innerText = `✅ Success! Your Case ID is: ${result.caseId}`;
+                form.reset();
+                document.getElementById("preview").innerHTML = "";
+            } else {
+                throw new Error(result.message || 'Submission failed.');
+            }
+        } catch (err) {
+            msgDiv.style.color = '#ff4b4b';
+            msgDiv.innerText = `❌ Error: ${err.message}`;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Contacts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      perspective: 1000px;
+    }
+
+    /* 3D Particle Background */
+    .particle-container {
+      position: absolute;
+      width: 100%; height: 100%;
+      top:0; left:0;
+      overflow: hidden;
+      z-index:0;
+    }
+    .particle {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      animation: float 10s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translate3d(0,0,0) rotateY(0deg); }
+      100% { transform: translate3d(800px,800px,-1000px) rotateY(360deg); }
+    }
+    .container {
+      position: relative;
+      background: rgba(255,255,255,0.05);
+      padding: 40px 30px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #ffd700;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+      animation: fadeInDown 1s ease forwards;
+    }
+    @keyframes fadeInDown {
+      0% {opacity:0; transform: translateY(-20px);}
+      100% {opacity:1; transform: translateY(0);}
+    }
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin: 15px 0;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideFadeIn 0.8s forwards;
+    }
+    .contact-btn i { font-size: 20px; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    @keyframes slideFadeIn { to { opacity:1; transform: translateX(0); } }
+    .contact-btn:nth-child(1){ animation-delay:0.2s; }
+    .contact-btn:nth-child(2){ animation-delay:0.4s; }
+    .contact-btn:nth-child(3){ animation-delay:0.6s; }
+    .contact-btn:nth-child(4){ animation-delay:0.8s; }
+    .contact-btn:nth-child(5){ animation-delay:1s; }
+
+    .police { background: #e74c3c; }
+    .hospital { background: #2ecc71; }
+    .fire { background: #e67e22; }
+    .ndrf { background: #3498db; }
+    .sdrf { background: #9b59b6; }
+    .contact-btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.6); filter: brightness(1.1); }
+    .back-home { margin-top: 25px; display: inline-block; text-decoration: none; font-weight: bold; color: #ffd700; font-size: 16px; transition: all 0.3s ease; }
+    .back-home:hover { color: #ffdd57; transform: translateY(-3px); text-decoration: underline; }
+    .popup { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; visibility:hidden; opacity:0; transition:0.3s ease; z-index:999; }
+    .popup.active { visibility: visible; opacity:1; }
+    .popup-content { background: #1f1f1f; color: #fff; padding:25px 30px; border-radius:16px; text-align:center; max-width:350px; width:90%; box-shadow:0 10px 30px rgba(0,0,0,0.5); animation: popIn 0.4s ease forwards; }
+    @keyframes popIn { from { transform: scale(0.7); opacity:0; } to { transform: scale(1); opacity:1; } }
+    .popup-content h3 { margin-bottom: 20px; font-size:20px; color:#ffd700; }
+    .popup-buttons { display:flex; justify-content:space-around; }
+    .popup-buttons button { padding:10px 20px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:15px; transition: all 0.3s ease; }
+    .confirm { background:#27ae60; color:#fff; }
+    .confirm:hover { background:#2ecc71; transform: translateY(-2px); }
+    .cancel { background:#e74c3c; color:#fff; }
+    .cancel:hover { background:#ff5e57; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<div class="particle-container" id="particles"></div>
+
+<div class="container">
+  <h2>🚨 Emergency Contacts</h2>
+
+  <button class="contact-btn police" onclick="confirmCall('100', 'Police')">
+    <i class="fas fa-shield-alt"></i> Call Police (100)
+  </button>
+  <button class="contact-btn hospital" onclick="confirmCall('108', 'Hospital')">
+    <i class="fas fa-hospital"></i> Call Hospital (108)
+  </button>
+  <button class="contact-btn fire" onclick="confirmCall('101', 'Fire Station')">
+    <i class="fas fa-fire-extinguisher"></i> Fire Station (101)
+  </button>
+  <button class="contact-btn ndrf" onclick="confirmCall('112', 'NDRF')">
+    <i class="fas fa-life-ring"></i> NDRF (112)
+  </button>
+  <button class="contact-btn sdrf" onclick="confirmCall('112', 'SDRF')">
+    <i class="fas fa-users"></i> SDRF (112)
+  </button>
+
+  <a href="/home" class="back-home">⬅ Back to Home</a>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h3 id="popupText">Are you sure?</h3>
+    <div class="popup-buttons">
+      <button class="confirm" onclick="makeCall()">Yes</button>
+      <button class="cancel" onclick="closePopup()">No</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let callNumber = "";
+  function confirmCall(number, service) {
+    callNumber = number;
+    document.getElementById("popupText").textContent = `📞 Call ${service} (${number})?`;
+    document.getElementById("popup").classList.add("active");
+  }
+  function closePopup() {
+    document.getElementById("popup").classList.remove("active");
+    callNumber = "";
+  }
+  function makeCall() {
+    if(callNumber) window.location.href = `tel:${callNumber}`;
+    closePopup();
+  }
+
+  const particleContainer = document.getElementById('particles');
+  const particleCount = 50;
+
+  for(let i=0;i<particleCount;i++){
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = `${Math.random()*100}%`;
+    particle.style.top = `${Math.random()*100}%`;
+    particle.style.width = `${5 + Math.random()*15}px`;
+    particle.style.height = particle.style.width;
+    particle.style.animationDuration = `${5 + Math.random()*15}s`;
+    particle.style.animationDelay = `${Math.random()*5}s`;
+    particleContainer.appendChild(particle);
+  }
+</script>
+</body>
+</html>

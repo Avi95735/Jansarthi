@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disaster Complaint Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .card {
+      background: #fff;
+      color: #333;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .back-home {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌍 Report a Disaster Complaint</h1>
+
+  <div class="cards">
+    <div class="card" onclick="goToPage('/complainform?category=Earthquake')">
+      <img src="https://static.scientificamerican.com/sciam/cache/file/7F5C87CE-C719-4650-B4E8AEF44415E806_source.jpg?crop=16%3A9%2Csmart&w=1920" alt="Earthquake">
+      <h3>Earthquake</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Floods')">
+      <img src="https://i.guim.co.uk/img/media/c85f6a99a7a2b4d45e4ca9a15b2d2ed1110f5f67/0_72_3000_1800/master/3000.jpg?width=465&dpr=1&s=none&crop=none" alt="Floods">
+      <h3>Floods</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Cyclone')">
+      <img src="https://cdn.britannica.com/48/123848-050-92824F8A/Cyclone-Catarina-International-Space-Station-Brazil-March-2004.jpg" alt="Cyclone">
+      <h3>Cyclone</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Droughts')">
+      <img src="https://asiainsurancepost.com/wp-content/uploads/2025/09/Drought.jpg" alt="Droughts">
+      <h3>Droughts</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Landslides')">
+      <img src="https://www.shutterstock.com/image-photo/dangerous-landslide-on-highway-yellapurkarnataka-260nw-2369873749.jpg" alt="Landslides">
+      <h3>Landslides</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Tsunami')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqTdPXqM4uyQ0wOCK-37SoW1yt_f_NXh7yRw&s" alt="Tsunami">
+      <h3>Tsunami</h3>
+    </div>
+    <div class="card" onclick="goToPage('/complainform?category=Snow Storms')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8w8TZp3hAsbzO3IwN7DP5ku81_pD4JqERqQ&s" alt="Snow Storms">
+      <h3>Snow Storms</h3>
+    </div>
+  </div>
+  
+  <br><br>
+  <h2><a href="home.ejs" class="back-home">⬅ Back to Home</a></h2>
+
+  <script>
+    function goToPage(page) {
+       window.location.href = page;
+    }
+  </script>
+</body>
+</html>

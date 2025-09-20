@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disaster Safety Tips Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-top: 20px;
+      color: #ffd700;
+      text-align: center;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      max-width: 900px;
+      text-align: center;
+      margin: 15px auto 30px auto;
+      color: #f0f0f0;
+      line-height: 1.6;
+      animation: fadeInDown 1.2s ease forwards;
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    img.main-img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      animation: fadeIn 1.8s ease forwards;
+    }
+
+    .toggle-btn {
+      background-color: #1f1f1f;
+      color: #ffd700;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .toggle-btn:hover {
+      background-color: #333333;
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .tips-container {
+      display: none;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .tips-container button {
+      background: linear-gradient(135deg, #ff4e50, #f9d423);
+      color: #1f1f1f;
+      font-weight: 600;
+      padding: 20px 10px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+      width: 100%;
+      max-width: 180px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tips-container button i {
+      font-size: 32px;
+      margin-bottom: 10px;
+      animation: bounceIcon 2s infinite;
+      color: #1f1f1f;
+    }
+
+    @keyframes bounceIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .tips-container button:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      background: linear-gradient(135deg, #f9d423, #ff4e50);
+    }
+
+    @media(max-width: 500px){
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1rem; padding: 0 10px; }
+      .tips-container button { max-width: 140px; padding: 15px 5px; font-size: 14px; }
+      .tips-container button i { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 Disaster Safety Tips Portal</h1>
+  <h2>Learn essential safety measures for natural disasters. Click any disaster button to watch expert videos on precautions, dos, and don'ts during emergencies.</h2>
+  <img class="main-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQQ3XKYQUQ6m22YH1IP3xy4zaGdT5dwO23Q&s" alt="Safety illustration">
+
+  <div class="button-container">
+    <button class="toggle-btn" onclick="toggleTips()">Show Safety Tips</button>
+  </div>
+
+  <div id="tips-container" class="tips-container">
+    <button id="earthquakes-btn"><i class="fas fa-bolt"></i>Earthquakes</button>
+    <button id="flash-floods-btn"><i class="fas fa-water"></i>Flash Floods</button>
+    <button id="landslides-btn"><i class="fas fa-mountain"></i>Landslides</button>
+    <button id="cyclones-btn"><i class="fas fa-wind"></i>Cyclones</button>
+    <button id="droughts-btn"><i class="fas fa-sun"></i>Droughts</button>
+    <button id="tsunami-btn"><i class="fas fa-water"></i>Tsunami</button>
+    <button id="snowstorms-btn"><i class="fas fa-snowflake"></i>Snow Storms</button>
+  </div>
+
+  <script>
+    function toggleTips() {
+      const tipsContainer = document.getElementById('tips-container');
+      tipsContainer.style.display = (tipsContainer.style.display === 'grid') ? 'none' : 'grid';
+    }
+
+    const videoLinks = {
+      'earthquakes-btn': 'https://youtu.be/-X3pGvhCab4?feature=shared',
+      'flash-floods-btn': 'https://youtu.be/z1qBSp0EfKs?si=cREOFhs2FmINYZzE',
+      'landslides-btn': 'https://youtu.be/lhA8POX-yLM',
+      'cyclones-btn': 'https://youtu.be/8Z0fD38vXQk',
+      'droughts-btn': 'https://youtu.be/qUe6eH9wr1M',
+      'tsunami-btn': 'https://youtu.be/Ly3qI2Bx6xM',
+      'snowstorms-btn': 'https://youtu.be/VT4fB43jO3g?si=ZbX3V-tXCDsU6tYK'
+    };
+
+    Object.keys(videoLinks).forEach(id => {
+      document.getElementById(id).addEventListener('click', () => {
+        window.open(videoLinks[id], '_blank');
+      });
+    });
+  </script>
+</body>
+</html>

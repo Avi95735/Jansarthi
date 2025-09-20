@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Complaints</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #eef2f7, #f9f9fb);
+      color: #333;
+    }
+
+    h1, h2, h3 { margin: 0; font-weight: 600; }
+    p { margin: 0; line-height: 1.6; }
+
+    .sidebar {
+      width: 240px;
+      background: linear-gradient(180deg, #667eea, #764ba2);
+      color: #fff;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      padding: 25px 15px;
+      overflow-y: auto;
+      box-shadow: 3px 0 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 22px;
+      letter-spacing: 1px;
+      animation: fadeInDown 0.6s ease;
+    }
+
+    .nav-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+    }
+    .nav-btn.active {
+      background: #fff;
+      color: #667eea;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .topbar {
+      padding: 18px 25px;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .topbar h1 { font-size: 24px; color: #444; }
+
+    .map-btn {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .map-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+    }
+
+    .missing-person-btn {
+      margin-left: 15px;
+      background: linear-gradient(135deg, #ffc107, #ff8b53);
+    }
+
+    .main {
+      padding: 25px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      left: 0;
+      bottom: -8px;
+      border-radius: 2px;
+    }
+
+    .complaint-card {
+      background: #fff;
+      padding: 20px;
+      margin: 0 auto 25px;
+      width: 80%;
+      border-radius: 14px;
+      border-left: 5px solid #ffc107;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease;
+    }
+    .complaint-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+    .complaint-card[data-status="Resolved"] {
+      border-left-color: #28a745;
+    }
+    
+    .missing-person-card {
+      background: #fff;
+      padding: 20px;
+      margin: 0 auto 25px;
+      width: 80%;
+      border-radius: 14px;
+      border-left: 5px solid #e91e63;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .missing-person-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .missing-person-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .missing-person-card .details {
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+
+    .complaint-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .complaint-card p { font-size: 15px; color: #555; }
+
+    .location-info {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+    .location-info a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .location-info a:hover {
+      text-decoration: underline;
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .status.Submitted {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .status.Resolved {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.Active {
+      background: #ffcdd2;
+      color: #c62828;
+    }
+    .status.Found {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+
+    .media-preview {
+      margin-top: 12px;
+      background: #fafafa;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 320px;
+      overflow: hidden;
+    }
+    .media-preview img, .media-preview video {
+      max-width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+    }
+
+    .resolve-btn {
+      margin-top: 14px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .resolve-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 5px 18px rgba(102,126,234,0.5);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media(max-width: 768px) {
+      .main { padding: 18px; }
+      .topbar { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <h1>📋 Complaints Dashboard</h1>
+    <div>
+      <a href="/map-view" target="_blank" class="map-btn">🗺️ View on Map</a>
+      <a href="/missing-persons" target="_blank" class="map-btn missing-person-btn">📄 View Missing Reports Page</a>
+    </div>
+  </div>
+
+  <div class="main" id="mainContent">
+    <h2 class="section-title">General Complaints</h2>
+    <div class="complaints-container" id="complaintsContainer">
+      <% if (!complaints || complaints.length === 0) { %>
+        <p style="text-align:center; color:#777; font-size:1.1rem; padding:40px;">
+          No complaints received yet.
+        </p>
+      <% } else { %>
+        <% complaints.forEach(c => { %>
+          <div class="complaint-card" data-category="<%= c.category || '' %>" data-status="<%= c.status || 'Submitted' %>">
+            <h3><%= c.subject || 'Unknown' %> (#<%= c.id %>)</h3>
+            <span class="status <%= c.status || 'Submitted' %>"><%= (c.status || 'Submitted').toUpperCase() %></span>
+            <p><%= c.description || 'No description' %></p>
+
+            <% if (c.location) { %>
+              <p class="location-info">
+                <strong>📍 Location:</strong> 
+                <a href="https://www.google.com/maps?q=<%= c.location.replace(/Lat:\s*|Lng:\s*/g, '') %>" target="_blank" title="View on Google Maps">
+                  <%= c.location %>
+                </a>
+              </p>
+            <% } %>
+
+            <div class="media-preview">
+              <% if (c.image_path) { %>
+                <% if (c.image_path.endsWith(".mp4")) { %>
+                  <video src="<%= getMediaPath(c.image_path) %>" controls></video>
+                <% } else { %>
+                  <img src="<%= getMediaPath(c.image_path) %>" alt="Media">
+                <% } %>
+              <% } %>
+            </div>
+
+            <% if ((c.status || 'Submitted') !== "Resolved") { %>
+              <button class="resolve-btn" onclick="markResolved('<%= c.id %>')">Mark as Resolved</button>
+            <% } %>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 40px;">Missing Person Reports</h2>
+    <div class="missing-persons-container" id="missingPersonsContainer">
+        <% if (!missing_persons || missing_persons.length === 0) { %>
+            <p style="text-align:center; color:#777; font-size:1.1rem; padding:40px;">
+                No missing person reports found.
+            </p>
+        <% } else { %>
+            <% missing_persons.forEach(person => { %>
+                <div class="missing-person-card">
+                    <h3><%= person.name %> (#<%= person.case_id %>)</h3>
+                    <span class="status <%= person.status %>"><%= person.status.toUpperCase() %></span>
+                    <img src="<%= getMediaPath(person.media_path) %>" alt="Photo of <%= person.name %>">
+                    <p class="details"><strong>Age:</strong> <%= person.age %>, <strong>Gender:</strong> <%= person.gender %></p>
+                    <p class="details"><strong>Last Seen:</strong> <%= new Date(person.last_seen_date).toLocaleDateString() %> at <%= person.last_seen_location %></p>
+                    <p><strong>Description:</strong> <%= person.description %></p>
+                    <% if ((person.status || 'Active') !== "Found") { %>
+                        <button class="resolve-btn" onclick="alert('Status update functionality to be implemented.')">Mark as Found</button>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+  </div>
+
+  <script>
+    function markResolved(id) {
+      fetch(`/mark-resolved/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+      .then(res => res.json())
+      .then(data => { if(data.success){ alert('✅ Complaint marked as resolved!'); window.location.reload(); } })
+      .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>

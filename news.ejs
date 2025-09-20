@@ -1,0 +1,556 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster News & Social Updates</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* Body Styles */
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #141e30;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  h1 {
+    text-align: center;
+    margin: 30px 0;
+    color: #ffd700;
+  }
+
+  /* Tabs Container */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Tab Buttons */
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #2c3e50;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .tab-btn:hover {
+    background: #16a085;
+    transform: scale(1.05);
+  }
+
+  .tab-btn.active {
+    background: #16a085;
+    transform: scale(1.05);
+  }
+
+  /* News Container */
+  .news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 0 20px 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* News Card */
+  .news-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .news-card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+  }
+
+  .news-card img:hover {
+    transform: scale(1.05);
+  }
+
+  .news-card h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffd700;
+  }
+
+  .news-card p {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #ddd;
+  }
+
+  .news-card a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #1abc9c;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .news-card a:hover {
+    color: #16a085;
+  }
+
+  /* Social Feeds */
+  .social-feeds {
+    text-align: center;
+    margin: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  iframe {
+    border: none;
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  /* Social Feeds Animation */
+  .social-feeds > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s forwards;
+  }
+
+  .social-feeds > *:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+
+  .social-feeds > *:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+
+  .social-feeds > *:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<h1>🌍 Disaster News & Social Updates</h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="loadNews('all', event)"><i class="fas fa-globe"></i> All</button>
+  <button class="tab-btn" onclick="loadNews('earthquake', event)"><i class="fas fa-house-crack"></i> Earthquake</button>
+  <button class="tab-btn" onclick="loadNews('flood', event)"><i class="fas fa-water"></i> Flood</button>
+  <button class="tab-btn" onclick="loadNews('cyclone', event)"><i class="fas fa-wind"></i> Cyclone</button>
+  <button class="tab-btn" onclick="loadNews('drought', event)"><i class="fas fa-sun"></i> Drought</button>
+  <button class="tab-btn" onclick="loadNews('landslide', event)"><i class="fas fa-mountain-city"></i> Landslide</button>
+  <button class="tab-btn" onclick="loadNews('tsunami', event)"><i class="fas fa-water"></i> Tsunami</button>
+  <button class="tab-btn" onclick="loadNews('snow', event)"><i class="fas fa-snowflake"></i> Snow Storm</button>
+</div>
+
+<div class="news-container" id="newsContainer">
+  <!-- News articles 
+</div>
+
+<div class="social-feeds">
+  <h2>Follow Disaster Updates on Social Media</h2>
+  <iframe src="https://www.instagram.com/p/CT3a9E9l9hH/embed" width="320" height="440" scrolling="no" allowtransparency="true"></iframe>
+  <a class="twitter-timeline" href="https://twitter.com/NASAdisasters?ref_src=twsrc%5Etfw">Tweets by NASAdisasters</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
+  <div class="fb-page" 
+       data-href="https://www.facebook.com/NationalDisasterManagementAuthorityIndia/" 
+       data-tabs="timeline" 
+       data-width="400" 
+       data-height="500" 
+       data-small-header="false" 
+       data-adapt-container-width="true" 
+       data-hide-cover="false" 
+       data-show-facepile="true">
+  </div>
+</div>
+
+<script>
+  
+const apiKey = "YOUR_NEWSAPI_KEY"; // Replace with NewsAPI.org key
+
+const newsContainer = document.getElementById("newsContainer");
+
+async function loadNews(category, event){
+  const query = category==="all" ? "earthquake OR flood OR cyclone OR drought OR landslide OR tsunami OR snow" : category;
+
+  try {
+    const res = await fetch(https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&apiKey=${apiKey});
+    const data = await res.json();
+    newsContainer.innerHTML = "";
+    data.articles.forEach((article, i) => {
+      const card = document.createElement("div");
+      card.classList.add("news-card");
+      card.innerHTML = `
+        <img src="${article.urlToImage || 'https://via.placeholder.com/300x180'}" alt="news">
+        <h3>${article.title}</h3>
+        <p>${article.description || ''}</p>
+        <a href="${article.url}" target="_blank">Read More</a>
+      `;
+      newsContainer.appendChild(card);
+      setTimeout(()=>card.classList.add("show"), i*100);
+    });
+  } catch(err) {
+    console.error(err);
+    newsContainer.innerHTML = "<p>Failed to fetch news. Please try again later.</p>";
+  }
+
+  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+// Load default news
+loadNews("all", {target: document.querySelector(".tab-btn.active")});
+</script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster News & Social Updates</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* Body Styles */
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #141e30;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  h1 {
+    text-align: center;
+    margin: 30px 0;
+    color: #ffd700;
+  }
+
+  /* Tabs Container */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Tab Buttons */
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #2c3e50;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .tab-btn:hover {
+    background: #16a085;
+    transform: scale(1.05);
+  }
+
+  .tab-btn.active {
+    background: #16a085;
+    transform: scale(1.05);
+  }
+
+  /* News Container */
+  .news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 0 20px 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* News Card */
+  .news-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .news-card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+  }
+
+  .news-card img:hover {
+    transform: scale(1.05);
+  }
+
+  .news-card h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffd700;
+  }
+
+  .news-card p {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #ddd;
+  }
+
+  .news-card a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #1abc9c;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .news-card a:hover {
+    color: #16a085;
+  }
+
+  /* Social Feeds */
+  .social-feeds {
+    text-align: center;
+    margin: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  iframe {
+    border: none;
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  /* Social Feeds Animation */
+  .social-feeds > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s forwards;
+  }
+
+  .social-feeds > *:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+
+  .social-feeds > *:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+
+  .social-feeds > *:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<h1>🌍 Disaster News & Social Updates</h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="loadNews('all', event)"><i class="fas fa-globe"></i> All</button>
+  <button class="tab-btn" onclick="loadNews('earthquake', event)"><i class="fas fa-house-crack"></i> Earthquake</button>
+  <button class="tab-btn" onclick="loadNews('flood', event)"><i class="fas fa-water"></i> Flood</button>
+  <button class="tab-btn" onclick="loadNews('cyclone', event)"><i class="fas fa-wind"></i> Cyclone</button>
+  <button class="tab-btn" onclick="loadNews('drought', event)"><i class="fas fa-sun"></i> Drought</button>
+  <button class="tab-btn" onclick="loadNews('landslide', event)"><i class="fas fa-mountain-city"></i> Landslide</button>
+  <button class="tab-btn" onclick="loadNews('tsunami', event)"><i class="fas fa-water"></i> Tsunami</button>
+  <button class="tab-btn" onclick="loadNews('snow', event)"><i class="fas fa-snowflake"></i> Snow Storm</button>
+</div>
+
+<div class="news-container" id="newsContainer">
+  <!-- News articles -->
+</div>
+
+<div class="social-feeds">
+  <h2>Follow Disaster Updates on Social Media</h2>
+  <iframe src="https://www.instagram.com/p/CT3a9E9l9hH/embed" width="320" height="440" scrolling="no" allowtransparency="true"></iframe>
+  <a class="twitter-timeline" href="https://twitter.com/NASAdisasters?ref_src=twsrc%5Etfw">Tweets by NASAdisasters</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
+  <div class="fb-page" 
+       data-href="https://www.facebook.com/NationalDisasterManagementAuthorityIndia/" 
+       data-tabs="timeline" 
+       data-width="400" 
+       data-height="500" 
+       data-small-header="false" 
+       data-adapt-container-width="true" 
+       data-hide-cover="false" 
+       data-show-facepile="true">
+  </div>
+</div>
+
+<script>
+  const newsContainer = document.getElementById("newsContainer");
+
+  // Static, hardcoded news data to display without an API
+  const staticNewsData = {
+    earthquake: [{
+      title: "Major Earthquake Hits Northern California",
+      description: "A powerful 7.1 magnitude earthquake struck, causing widespread damage. Emergency services are on high alert.",
+      image: "https://images.unsplash.com/photo-1610212570269-bc601a1e5017?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }, {
+      title: "Aftershocks Rattle Japan After 6.8 Quake",
+      description: "A series of strong aftershocks are being felt across the region following a significant earthquake yesterday evening.",
+      image: "https://images.unsplash.com/photo-1516938743195-b74a0f4c11a2?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    flood: [{
+      title: "Flash Floods Submerge Coastal Towns in Florida",
+      description: "Days of torrential rain have resulted in severe flash floods. Thousands have been evacuated as water levels continue to rise.",
+      image: "https://images.unsplash.com/photo-1588300114983-5b334507a843?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }, {
+      title: "Germany Faces Unprecedented River Flooding",
+      description: "Major rivers have burst their banks in western Germany, leading to one of the worst flooding events in decades.",
+      image: "https://images.unsplash.com/photo-1605739445492-6f6b44a1754f?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    cyclone: [{
+      title: "Cyclone 'Leo' Makes Landfall in India",
+      description: "Cyclone 'Leo' has made landfall on the eastern coast with wind speeds of over 150 km/h. Authorities have evacuated over a million people.",
+      image: "https://images.unsplash.com/photo-1561553543-e4c5335034b2?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    drought: [{
+      title: "Severe Drought Threatens Horn of Africa",
+      description: "A prolonged drought is causing a severe humanitarian crisis. Lack of rainfall has led to crop failure and water shortages.",
+      image: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    landslide: [{
+      title: "Massive Landslide in the Himalayas Blocks Highway",
+      description: "A massive landslide triggered by heavy monsoon rains has blocked a key highway, trapping hundreds of vehicles and tourists.",
+      image: "https://images.unsplash.com/photo-1516913149599-721b3a774a07?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    tsunami: [{
+      title: "Tsunami Warning After Undersea Volcano Eruption",
+      description: "An undersea volcano erupted near Tonga, triggering tsunami warnings for several Pacific island nations. Waves have been observed.",
+      image: "https://images.unsplash.com/photo-1554232682-b9ef9c92f759?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }],
+    snow: [{
+      title: "Record-Breaking Snowstorm Buries Parts of Japan",
+      description: "A historic snowstorm has blanketed parts of northern Japan, causing travel chaos and power outages for thousands of residents.",
+      image: "https://images.unsplash.com/photo-1610484832939-1b4535342523?auto=format&fit=crop&w=800&q=60",
+      url: "#",
+    }]
+  };
+
+  function loadNews(category, event) {
+    let articlesToShow = [];
+    if (category === 'all') {
+      for (const catKey in staticNewsData) {
+        articlesToShow.push(...staticNewsData[catKey]);
+      }
+    } else {
+      articlesToShow = staticNewsData[category] || [];
+    }
+
+    newsContainer.innerHTML = "";
+    if (articlesToShow.length === 0) {
+      newsContainer.innerHTML = `<p style="text-align: center; color: #ffcccc;">No news available for this category.</p>`;
+    } else {
+      articlesToShow.forEach((article, i) => {
+        const card = document.createElement("div");
+        card.classList.add("news-card");
+        card.innerHTML = `
+          <img src="${article.image || 'https://via.placeholder.com/300x180'}" alt="news">
+          <h3>${article.title}</h3>
+          <p>${article.description || ''}</p>
+          <a href="${article.url}" target="_blank" rel="noopener noreferrer">Read More</a>
+        `;
+        newsContainer.appendChild(card);
+        setTimeout(() => card.classList.add("show"), i * 100);
+      });
+    }
+
+    if (event && event.target) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+  }
+
+  // Load default news ('all' category) when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const initialActiveButton = document.querySelector(".tab-btn.active");
+    loadNews("all", { target: initialActiveButton });
+  });
+</script>
+
+</body>
+</html>

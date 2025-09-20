@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartSeva - Homepage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: white;
+      overflow-x: hidden;
+      background: #111;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at top left, #667eea, #764ba2, #f7971e, #ffd200);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      z-index: -2;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .fab-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+    }
+    .fab-main {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #ff5722, #f9d423);
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .fab-main:hover {
+      transform: scale(1.1);
+    }
+    .fab-container.active .fab-main {
+      transform: rotate(45deg);
+    }
+    .fab-option {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      color: #333;
+      padding: 8px 16px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0;
+      transform: scale(0.5) translateY(0);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .fab-option i {
+      margin-right: 8px;
+      color: #ff5722;
+    }
+    .fab-container.active .fab-option {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .fab-container.active .fab-option:nth-child(1) {
+      transform: scale(1) translateY(-75px);
+      transition-delay: 0.1s;
+    }
+    .fab-container.active .fab-option:nth-child(2) {
+      transform: scale(1) translateY(-140px);
+      transition-delay: 0.2s;
+    }
+    .fab-container.active .fab-option:nth-child(3) {
+      transform: scale(1) translateY(-205px);
+      transition-delay: 0.3s;
+    }
+    .particles {
+      position: fixed;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .particles span {
+      position: absolute;
+      display: block;
+      width: 20px; height: 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      animation: float 15s linear infinite;
+      bottom: -150px;
+    }
+    .particles span:nth-child(1) { left: 20%; width: 25px; height: 25px; animation-delay: 0s; }
+    .particles span:nth-child(2) { left: 50%; animation-delay: 2s; animation-duration: 20s; }
+    .particles span:nth-child(3) { left: 70%; width: 30px; height: 30px; animation-delay: 4s; }
+    .particles span:nth-child(4) { left: 90%; animation-delay: 6s; animation-duration: 18s; }
+    .particles span:nth-child(5) { left: 10%; width: 15px; height: 15px; animation-delay: 8s; animation-duration: 25s; }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-1000px) scale(0.5); opacity: 0; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+    }
+    .logo img { width: 40px; height: 40px; border-radius: 50%; }
+    .menu { display: flex; gap: 25px; }
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .menu a:hover { color: #ffd200; }
+    .menu-toggle { display: none; font-size: 22px; cursor: pointer; }
+    @media (max-width: 768px) {
+      nav { padding: 12px 20px; }
+      .menu {
+        position: absolute;
+        top: 60px; left: -100%;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        width: 100%;
+        padding: 20px 0;
+        align-items: center;
+        transition: left 0.3s ease;
+      }
+      .menu.active { left: 0; }
+      .menu-toggle { display: block; color: white; }
+    }
+    .language-selector select {
+      background: rgba(255,255,255,0.2);
+      color: white; border: none; padding: 8px 12px;
+      border-radius: 4px; font-family: "Poppins", sans-serif;
+      font-weight: 500; cursor: pointer;
+    }
+    .language-selector select option {
+      background: #333; color: white;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 100px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    section h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+    section p {
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #f1f1f1;
+    }
+    @media (max-width: 768px) {
+      section h1 { font-size: 28px; }
+      section p { font-size: 16px; }
+    }
+
+    #features { background: rgba(0,0,0,0.4); }
+    #solutions { background: rgba(0,0,0,0.35); }
+    #resources { background: rgba(0,0,0,0.4); }
+    #complain { background: rgba(0,0,0,0.35); }
+    #aboutUs { background: rgba(0,0,0,0.4); }
+
+    #features .container {
+      max-width: 1200px;
+      width: 100%;
+      background: rgba(0,0,0,0.7);
+      border-radius: 25px;
+      padding: 50px 40px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    #features h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 50px;
+      background: linear-gradient(90deg, #ffcc00, #ff0066, #00ffcc);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 5s ease infinite;
+    }
+    #features ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    #features li {
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    #features li.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    #features li:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.2);
+    }
+    #features li h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffcc00;
+    }
+    #features li h3 i { transition: transform 0.5s; }
+    #features li:hover h3 i { transform: rotate(360deg); }
+    #features li p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #fff;
+    }
+    #features .map-preview {
+      margin-top: 50px;
+      border-radius: 25px;
+      overflow: hidden;
+      height: 400px;
+      background: url('https://maps.googleapis.com/maps/api/staticmap?center=Delhi,India&zoom=10&size=800x400&key=YOUR_API_KEY') center/cover no-repeat;
+      position: relative;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+    }
+    #features .map-preview::after {
+      content: 'Interactive Map Preview';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      color: #ffcc00;
+      background: rgba(0,0,0,0.5);
+      padding: 12px 25px;
+      border-radius: 15px;
+    }
+    @keyframes gradientText {
+      0%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+      100%{ background-position: 0% 50%; }
+    }
+
+    #solutions h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 60px;
+      background: linear-gradient(90deg, #ff4b1f, #ff9068);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 6s ease infinite;
+    }
+    #solutions .timeline {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+    #solutions .timeline::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background: linear-gradient(to bottom, #ff4b1f, #ff9068);
+      top: 0; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+    }
+    #solutions .timeline-item {
+      padding: 20px 40px;
+      position: relative;
+      width: 50%;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+    #solutions .timeline-item.left { left: 0; text-align: right; }
+    #solutions .timeline-item.right { left: 50%; text-align: left; }
+    #solutions .timeline-item::before {
+      content: ''; position: absolute;
+      width: 25px; height: 25px; border-radius: 50%;
+      background: #ff4b1f; top: 20px; z-index: 1;
+      box-shadow: 0 0 15px rgba(255,75,31,0.6);
+    }
+    #solutions .timeline-item.left::before { right: -13px; }
+    #solutions .timeline-item.right::before { left: -13px; }
+    #solutions .timeline-item .content {
+      padding: 20px; border-radius: 15px;
+      background: linear-gradient(135deg, rgba(255,75,31,0.85), rgba(255,144,104,0.85));
+      display: inline-block; max-width: 90%; position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+    #solutions .timeline-item.left .content { margin-left: auto; }
+    #solutions .timeline-item.right .content { margin-right: auto; }
+    #solutions .timeline-item .content i {
+      font-size: 3rem; margin-bottom: 15px; display: block; color: #fff;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.5s;
+    }
+    #solutions .timeline-item .content h3 {
+      font-size: 1.5rem; margin-bottom: 10px; color: #fff;
+    }
+    #solutions .timeline-item .content p {
+      font-size: 1rem; line-height: 1.6; color: #170202;
+    }
+    #solutions .timeline-item:hover .content i {
+      transform: scale(1.3) rotate(15deg);
+    }
+    #solutions .timeline-item.show {
+      opacity: 1; transform: translateY(0);
+    }
+
+    #aboutUs .slider-container {
+      max-width: 1200px;
+      width: 100%;
+      position: relative;
+    }
+    #aboutUs h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      background: linear-gradient(90deg, #ffcc00, #ff0066, #00ffcc);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 5s ease infinite;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    }
+    #aboutUs .slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 25px;
+      padding-bottom: 20px;
+    }
+    #aboutUs .slider::-webkit-scrollbar { height: 10px; }
+    #aboutUs .slider::-webkit-scrollbar-thumb {
+      background: #ffcc00;
+      border-radius: 5px;
+    }
+    #aboutUs .card {
+      border : 2px solid black;
+      flex: 0 0 auto;
+      min-width: 300px;
+      max-width: 360px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 25px;
+      padding: 30px 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      transition: transform 0.3s, background 0.3s;
+      text-align: center;
+    }
+    #aboutUs .card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.2);
+    }
+    #aboutUs .card i {
+      font-size: 4rem;
+      color: #ffcc00;
+      margin-bottom: 20px;
+      transition: transform 0.5s;
+    }
+    #aboutUs .card:hover i {
+      transform: scale(1.2) rotate(15deg);
+    }
+    #aboutUs .card p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    #aboutUs .card p strong {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #ffcc00;
+    }
+    #aboutUs .buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    #aboutUs .buttons button {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 2.5rem;
+      padding: 12px 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      transition: background 0.3s, transform 0.3s;
+    }
+    #aboutUs .buttons button:hover {
+      background: rgba(255,204,0,0.8);
+      color: #000;
+      transform: scale(1.1);
+    }
+
+    @media(max-width:768px){
+      #aboutUs h1 { font-size: 2.4rem; margin-bottom: 30px; }
+      #aboutUs .card { min-width: 240px; max-width: 300px; padding: 25px 20px; }
+      #aboutUs .card i { font-size: 3.5rem; }
+      #aboutUs .card p { font-size: 1rem; }
+    }
+    @media(max-width:480px){
+      #aboutUs h1 { font-size: 2rem; margin-bottom: 25px; }
+      #aboutUs .card { min-width: 180px; max-width: 250px; padding: 20px; }
+      #aboutUs .card i { font-size: 3rem; }
+      #aboutUs .card p { font-size: 0.95rem; }
+    }
+
+    #imageSlider { padding-top: 70px; }
+    #imageSlider .slider {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+    #imageSlider .carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: rotate3d 15s infinite linear;
+    }
+    #imageSlider .carousel img {
+      position: absolute;
+      width: 280px;
+      height: 180px;
+      left: 10px;
+      top: 60px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      transition: transform 0.5s;
+    }
+    #imageSlider .carousel img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    }
+    @keyframes rotate3d {
+      from { transform: rotateY(0deg); }
+      to   { transform: rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <nav>
+    <div class="logo">
+      <img src="https://play-lh.googleusercontent.com/lpjSSbDIIls_mr21c8tGRUSH0ULB719g1MZHxHzJJP9SKftdd3xG2TSulXp1M_EkWC_u" width : 300px height : 300px alt="JanSarthi Logo">
+      JanSaarthi
+    </div>
+    <div class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></div>
+    <div class="menu" id="menu">
+      <a href="#home"><%= __('Home') %></a>
+      <a href="/userLogin"><%= __('Userlogin') %></a>
+      <a href="/adminLogin"><%= __('Adminlogin') %></a>
+      <a href="#features"><%= __('Features') %></a>
+      <a href="#solutions"><%= __('Solutions') %></a>
+      <a href="/complain"><%= __('Complain') %></a>
+      <a href="/trackStatus"><%= __('Trackstatus') %></a>
+      <a href="#aboutUs"><%= __('Aboutus') %></a>
+      <a href="/emergency"><%= __('Emergency Contact') %></a>
+      <a href="fetchDetail" data-translate-key="nav_fetch_detail">Fetch</a>
+      <div class="language-selector">
+        <select id="language-switcher" onchange="window.location.href = '?lang=' + this.value">
+          <option value="en" <%= getLocale() === 'en' ? 'selected' : '' %>>English</option>
+          <option value="hi" <%= getLocale() === 'hi' ? 'selected' : '' %>>Hindi</option>
+          <option value="bh" <%= getLocale() === 'bh' ? 'selected' : '' %>>Bhojpuri</option>
+          <option value="bn" <%= getLocale() === 'bn' ? 'selected' : '' %>>Bengali</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <section id="imageSlider" aria-label="Image slider">
+    <div class="slider">
+      <div class="carousel">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkf5xJ2Xm3asZ8xg4LwGcynXRkeQ0xE6lYVw&s" style="transform: rotateY(0deg) translateZ(400px);">
+        <img src="https://upload.wikimedia.org/wikipedia/en/7/7d/Sdrf_Assam_logo.png" style="transform: rotateY(60deg) translateZ(400px);">
+        <img src="https://m.economictimes.com/thumb/msid-88552503,width-1200,height-1200,resizemode-4,imgsize-6916/ngos.jpg" style="transform: rotateY(120deg) translateZ(400px);">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkY7rNABzvT3qn2Yu6iAjBppRyEEmz7eTXqw&s" style="transform: rotateY(180deg) translateZ(400px);">
+        <img src="https://upload.wikimedia.org/wikipedia/en/1/13/State_Disaster_Management_Authority_%28Azad_Jammu_%26_Kashmir%29_logo.png" style="transform: rotateY(240deg) translateZ(400px);">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG_Ao9AW_LZW5lvJRDUCwBoqqR--fmi3H6Mw&s" style="transform: rotateY(300deg) translateZ(400px);">
+        <img src="" style="transform: rotateY(360deg) translateZ(400px);">
+        <img src="" style="transform: rotateY(300deg) translateZ(400px);">
+      </div>
+    </div>
+  </section>
+
+  <section id="home">
+    <h1 data-translate-key="home_welcome"><%= __('JanSaarthi') %></h1>
+    <br>
+    <h3>Har Awwaz ke saath</h3>
+    <br>
+    <p data-translate-key="home_tagline">Your one-stop companion platform in disaster.</p>
+    <br>
+    <h3 data-translate-key="home_mission_title"><%= __('home_mission_title') %> - Wherever there's need , there's JanSaarthi</h3>
+    <br>
+    <p data-translate-key="home_mission_text">"Our solution delivers a triple impact - socially empowering citizens, economically saving resources, and helping every citizens."</p>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <h1 data-translate-key="features_title">🌐 JanSaarthi - Citizen Features</h1>
+      <ul>
+        <li>
+          <h3 data-translate-key="feature1_title"><i class="fa-solid fa-camera"></i> Easy Real time Issue Reporting</h3>
+          <p data-translate-key="feature1_desc">Submit complaints with photos, GPS location, text or voice notes.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature2_title"><i class="fa-solid fa-map-location-dot"></i> Real-Time Location Tagging</h3>
+          <p data-translate-key="feature2_desc">Automatic GPS tagging for accurate issue location.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature3_title"><i class="fa-solid fa-language"></i> Multilingual Support</h3>
+          <p data-translate-key="feature3_desc">Interface available in multiple languages like English, Hindi, Bengali, etc.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature4_title"><i class="fa-solid fa-map"></i> Interactive Map View</h3>
+          <p data-translate-key="feature4_desc">Citizens can see reported issues on a live city map.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature5_title"><i class="fa-solid fa-spinner"></i> Complaint Tracking</h3>
+          <p data-translate-key="feature5_desc">Track complaint status: Submitted → In Progress → Resolved.</p>
+          <p>Track who reported and verified incidents.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature6_title"><i class="fa-solid fa-bell"></i> Push Notifications & Alerts</h3>
+          <p data-translate-key="feature6_desc">Receive updates about complaint acknowledgment and resolution.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature7_title"><i class="fa-solid fa-mobile-screen-button"></i> User-Friendly Mobile Interface</h3>
+          <p data-translate-key="feature7_desc">Responsive, mobile-first design compatible with all devices.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature8_title"><i class="fa-solid fa-mobile-screen-button"></i> Verification & Credibility</h3>
+          <p data-translate-key="feature8_desc">Geotags , timestamps , media and community confirmations validate reports.</p>
+        </li>
+        <li>
+          <h3 data-translate-key="feature4_title"><i class="fa-solid fa-map"></i>Offline & SMS support</h3>
+          <p data-translate-key="feature4_desc">Report even without internet via SMS o r offline app caching. Automatic sync when connectivity returns .</p>
+        </li>
+      </ul>
+
+      <div class="map-preview">
+        <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224181.11047875157!2d88.18254112599966!3d22.535343439863773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f882db4908f667%3A0x43e330e68f6c2cbc!2sKolkata%2C%20West%20Bengal!5e1!3m2!1sen!2sin!4v1758348724730!5m2!1sen!2sin" width="1050" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
+    </div>
+  </section>
+  <section id="solutions">
+    <h1 data-translate-key="solutions_title">Solutions Provided by JanSaarthi</h1>
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="content">
+          <i class="fa-solid fa-bolt"></i>
+          <h3 data-translate-key="solution1_title">Real time Incident Reporting</h3>
+          <p data-translate-key="solution1_desc">Citizens can submit disaster-related reports via text,images,or videos . Geotag and timestamp ensure accurate location tracking .</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <i class="fa-solid fa-tracking-in-progress"></i>
+          <h3 data-translate-key="solution2_title">Community Dashboard</h3>
+          <p data-translate-key="solution2_desc">View verified reports on an interactive map and list . Filter by disaster type , urgency , or location .</p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <h3 data-translate-key="solution3_title">Interactive Mapping</h3>
+          <p data-translate-key="solution3_desc">Live maps with color-coded markers show reported issues, helping citizens and authorities identify problem hotspots efficiently.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <i class="fa-solid fa-language"></i>
+          <h3 data-translate-key="solution4_title">Multilingual Access</h3>
+          <p data-translate-key="solution4_desc">Supports English, Hindi, Bengali, and regional languages, allowing citizens from all backgrounds to report and access services easily.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <i class="fa-solid fa-share-nodes"></i>
+          <h3 data-translate-key="solution5_title">Automated Task Routing</h3>
+          <p data-translate-key="solution5_desc">Complaints automatically go to the relevant department based on type and location, reducing administrative delays.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3 data-translate-key="solution6_title">Community & Administrative tools</h3>
+          <p data-translate-key="solution6_desc">Crowd-based confirmation to validate reports quickly . Admin dashboard for moderators to manage, verify, or escalate incidents .</p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <h3 data-translate-key="solution7_title">Mobile & Web Accessibility</h3>
+          <p data-translate-key="solution7_desc">Fully responsive web and mobile interface enables citizens to report issues anytime, anywhere.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <i class="fa-solid fa-handshake-angle"></i>
+          <h3 data-translate-key="solution8_title">Transparency & Audit Trail</h3>
+          <p data-translate-key="solution8_desc">Track who sub,mitted and verified ecah report. Promote accountability and aligns with SDG 16</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h3 style="color:white;" data-translate-key="datatable_title">Data Table of Complain : </h3>
+  <br>
+  <div style="width: 100%; max-width: 1500px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse; text-align: center;">
+      <thead style="background: #0078D7; color: rgb(219, 199, 199);">
+        <tr>
+          <th style="padding: 14px; font-size: 18px; border: black;" data-translate-key="datatable_total">Total Received Problems</th>
+          <th style="padding: 14px; font-size: 18px; border: black;" data-translate-key="datatable_solved">Solved Problems</th>
+          <th style="padding: 14px; font-size: 18px; border: black;" data-translate-key="datatable_pending">Pending Problems</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #480f0f;">
+          <td data-label="Total Received" style="padding: 14px; font-size: 18px;"><%= stats.total %></td>
+          <td data-label="Solved" style="padding: 14px; font-size: 18px;"><%= stats.resolved %></td>
+          <td data-label="Pending" style="padding: 14px; font-size: 18px;"><%= stats.pending %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section id="aboutUs">
+    <div class="slider-container">
+      <h1 data-translate-key="about_title">About Us – JanSaarthi</h1>
+      <div class="slider" id="sliderHorizontal">
+        <div class="card">
+          <i class="fa-solid fa-people-group"></i>
+          <p data-translate-key="about1_desc">JanSaarthi is a citizen-driven disaster reporting platform designed to make communities safer and more resilient.</p>
+          <br>
+          <p>
+            Our mission is to empower people to report, verify, and respond to disasters oin real-time using text, images, videos, and geolocation.
+          </p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-city"></i>
+          <p data-translate-key="about2_desc">With real-time issue reporting, interactive maps, and multilingual support, SmartSeva empowers citizens to actively participate in building smarter, protective, and safer cities.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-building-columns"></i>
+          <p data-translate-key="about3_desc">On the administrative side, JanSaarthi empowers administrators and disaster management teams to act quickly and efficiently. Through the administrative dashboard , authorities can : </p>
+          <br>
+          <h3>Monitor Real-time reports</h3>
+          <h3>verify and Approve Reports</h3>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-eye"></i>
+          <p data-translate-key="about4_desc"><strong>Our Vision:</strong>"To build safer, reilient communities by empowering citizens with real-time disaster reporting, verified information, and collaboratyive action ."</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-bullseye"></i>
+          <p data-translate-key="about5_desc"><strong>Our Mission:</strong> To empower citizens with an easy-to-use platform for reporting issues while providing governments with tools to improve responsiveness, transparency, and service quality.</p>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button id="prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="next"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#222; color:#fff; padding:40px 20px; text-align:center; font-family:Arial, sans-serif;">
+  
+  <div style="max-width:1200px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between;">
+
+    <div style="flex:1; min-width:250px; margin:10px;">
+      <h2 style="color:#f4a261; margin-bottom:15px;"><%= __('footer_title') %></h2>
+      <p style="line-height:1.6; font-size:14px;">
+        Empowering citizens with smart solutions for reporting and resolving civic issues efficiently.
+      </p>
+    </div>
+
+    <div style="flex:1; min-width:250px; margin:10px;">
+      <h3 style="color:#f4a261; margin-bottom:15px;"><%= __('footer_links_title') %></h3>
+      <ul style="list-style:none; padding:0; font-size:14px;">
+        <li style="margin:6px 0;"><a href="#home" style="color:#fff; text-decoration:none;" data-translate-key="nav_home">Home</a></li>
+        <li style="margin:6px 0;"><a href="#features" style="color:#fff; text-decoration:none;" data-translate-key="nav_features">Features</a></li>
+        <li style="margin:6px 0;"><a href="#aboutUs" style="color:#fff; text-decoration:none;" data-translate-key="nav_about_us">About Us</a></li>
+        <li style="margin:6px 0;"><a href="#solutions" style="color:#fff; text-decoration:none;" data-translate-key="nav_solutions">Solutions</a></li>
+        <li style="margin:6px 0;"><a href="/complain" style="color:#fff; text-decoration:none;" data-translate-key="nav_complain">Complains</a></li>
+        <li style="margin:6px 0;"><a href="/contactus" style="color:#fff; text-decoration:none;" data-translate-key="nav_contact_us">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div style="flex:1; min-width:250px; margin:10px;">
+      <h3 style="color:#f4a261; margin-bottom:15px;" data-translate-key="nav_contact_us">Contact Us</h3>
+      <p style="margin:6px 0;">📍 Budge Budge Institute of Technology, Kolkata - 700137</p>
+      <p style="margin:6px 0;">📧 support@jansaarthi.com</p>
+      <p style="margin:6px 0;">📞 +91 XXXXXXXXXX</p>
+    </div>
+
+  </div>
+
+  <hr style="margin:30px 0; border:0.5px solid #444;">
+
+  <p style="font-size:13px; margin:0;">&copy; 2025 JanSaarthi. All Rights Reserved.</p>
+</footer>
+
+  <div class="fab-container">
+    <a href="/missing-complaint" class="fab-option">
+      <i class="fa-solid fa-person-circle-question"></i>Missing Person
+    </a>
+    <a href="/news" class="fab-option">
+      <i class="fa-solid fa-newspaper"></i>News
+    </a>
+    <a href="/safety" class="fab-option">
+      <i class="fa-solid fa-shield-halved"></i>Safety Tips
+    </a>
+    <div class="fab-main">
+      <i class="fa-solid fa-plus"></i>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+
+    const features = document.querySelectorAll('#features li');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    features.forEach(f => observer.observe(f));
+
+    const items = document.querySelectorAll('.timeline-item');
+    const observer2 = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.3 });
+    items.forEach(item => observer2.observe(item));
+
+    const slider = document.getElementById('slider');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+
+    const horizSlider = document.getElementById('slider') || document.getElementById('sliderHorizontal');
+
+    function getScrollDistance() {
+      const card = horizSlider ? horizSlider.querySelector('.card') : null;
+      return card ? card.offsetWidth + 25 : 320;
+    }
+    if (prevBtn && horizSlider) {
+      prevBtn.addEventListener('click', () => {
+        horizSlider.scrollBy({ left: -getScrollDistance(), behavior: 'smooth' });
+      });
+    }
+    if (nextBtn && horizSlider) {
+      nextBtn.addEventListener('click', () => {
+        horizSlider.scrollBy({ left: getScrollDistance(), behavior: 'smooth' });
+      });
+    }
+
+    const translations = {
+      en: {
+        nav_home: 'Home', nav_user_login: 'User Login', nav_admin_login: 'Admin Login', nav_features: 'Features', nav_solutions: 'Solutions', nav_complain: 'Complain', nav_track_status: 'Track Status', nav_about_us: 'About Us', nav_contact_us: 'Contact Us',
+        home_welcome: 'Welcome to SmartSeva', home_tagline: 'Your one-stop platform for efficient public service solutions.', home_mission_title: 'SmartSeva', home_mission_text: '"Our solution delivers a triple impact - socially empowering citizens, economically saving resources, and environmentally creating cleaner and greener communities."',
+        features_title: '🌐 SmartSeva - Citizen Features',
+        fab_missing_person: 'Missing Person',
+        fab_news: 'News',
+        fab_safety_tips: 'Safety Tips',
+        nav_my_complaints: 'My Complaints',
+        feature1_title: 'Easy Issue Reporting', feature1_desc: 'Submit complaints with photos, GPS location, text or voice notes.',
+        feature2_title: 'Real-Time Location Tagging', feature2_desc: 'Automatic GPS tagging for accurate issue location.',
+        feature3_title: 'Multilingual Support', feature3_desc: 'Interface available in multiple languages like English, Hindi, Bengali, etc.',
+        feature4_title: 'Interactive Map View', feature4_desc: 'Citizens can see reported issues on a live city map.',
+        feature5_title: 'Complaint Tracking', feature5_desc: 'Track complaint status: Submitted → In Progress → Resolved.',
+        feature6_title: 'Push Notifications & Alerts', feature6_desc: 'Receive updates about complaint acknowledgment and resolution.',
+        feature7_title: 'User-Friendly Mobile Interface', feature7_desc: 'Responsive, mobile-first design compatible with all devices.',
+        solutions_title: 'Solutions Provided by SmartSeva',
+        solution1_title: 'Efficient Civic Issue Reporting', solution1_desc: 'Citizens can submit complaints instantly with photos, videos, and location details. Reduces delays for potholes, broken streetlights, or overflowing trash bins.',
+        solution2_title: 'Real-Time Tracking', solution2_desc: 'Track complaint status from submission to resolution, ensuring transparency and accountability in government response.',
+        solution3_title: 'Interactive Mapping', solution3_desc: 'Live maps with color-coded markers show reported issues, helping citizens and authorities identify problem hotspots efficiently.',
+        solution4_title: 'Multilingual Access', solution4_desc: 'Supports English, Hindi, Bengali, and regional languages, allowing citizens from all backgrounds to report and access services easily.',
+        solution5_title: 'Automated Task Routing', solution5_desc: 'Complaints automatically go to the relevant department based on type and location, reducing administrative delays.',
+        solution6_title: 'Analytics and Insights', solution6_desc: 'Government dashboards display trends, response times, and resolution rates to improve service delivery and resource allocation.',
+        solution7_title: 'Mobile & Web Accessibility', solution7_desc: 'Fully responsive web and mobile interface enables citizens to report issues anytime, anywhere.',
+        solution8_title: 'Citizen-Government Collaboration', solution8_desc: 'Citizens can upvote and comment on issues, helping authorities prioritize urgent problems, building trust and transparency.',
+        datatable_title: 'Data Table of Complain :', datatable_total: 'Total Received Problems', datatable_solved: 'Solved Problems', datatable_pending: 'Pending Problems',
+        about_title: 'About Us – SmartSeva',
+        about1_desc: 'SmartSeva is a citizen-centric platform designed to bridge the gap between citizens and local government authorities. Our mission is to make civic services transparent, responsive, and efficient.',
+        about2_desc: 'With real-time issue reporting, interactive maps, and multilingual support, SmartSeva empowers citizens to actively participate in building smarter, cleaner, and safer cities.',
+        about3_desc: 'On the administrative side, SmartSeva provides municipal staff and authorities with a centralized dashboard that streamlines complaint management, prioritizes issues, and enhances government accountability.',
+        about4_desc: '<strong>Our Vision:</strong> To create smarter cities where citizens’ voices are heard, and civic issues are resolved quickly and efficiently.',
+        about5_desc: '<strong>Our Mission:</strong> To empower citizens with an easy-to-use platform for reporting issues while providing governments with tools to improve responsiveness, transparency, and service quality.',
+        footer_title: 'SmartSeva', footer_tagline: 'Empowering citizens with smart solutions for reporting and resolving civic issues efficiently.', footer_links_title: 'Quick Links', footer_copyright: '© 2025 SmartSeva. All Rights Reserved.'
+      },
+      hi: {
+        nav_home: 'होम', nav_user_login: 'उपयोगकर्ता लॉगिन', nav_admin_login: 'एडमिन लॉगिन', nav_features: 'विशेषताएँ', nav_solutions: 'समाधान', nav_complain: 'शिकायत करें', nav_track_status: 'स्थिति ट्रैक करें', nav_about_us: 'हमारे बारे में', nav_contact_us: 'संपर्क करें', nav_fetch_detail: 'विवरण प्राप्त करें',
+        fab_missing_person: 'लापता व्यक्ति',
+        fab_news: 'समाचार',
+        fab_safety_tips: 'सुरक्षा सुझाव',
+        nav_my_complaints: 'मेरी शिकायतें',
+        home_welcome: 'स्मार्टसेवा में आपका स्वागत है', home_tagline: 'कुशल सार्वजनिक सेवा समाधानों के लिए आपका वन-स्टॉप प्लेटफॉर्म।', home_mission_title: 'स्मार्टसेवा', home_mission_text: '" हमारा समाधान तिगुना प्रभाव डालता है - सामाजिक रूप से नागरिकों को सशक्त बनाना, आर्थिक रूप से संसाधनों की बचत करना, और पर्यावरणीय रूप से स्वच्छ और हरित समुदायों का निर्माण करना। "',
+        features_title: '🌐 स्मार्टसेवा - नागरिक सुविधाएँ',
+        feature1_title: 'आसान समस्या रिपोर्टिंग', feature1_desc: 'फोटो, जीपीएस लोकेशन, टेक्स्ट या वॉयस नोट्स के साथ शिकायतें दर्ज करें।',
+        feature2_title: 'वास्तविक समय लोकेशन टैगिंग', feature2_desc: 'समस्या के सटीक स्थान के लिए स्वचालित जीपीएस टैगिंग।',
+        feature3_title: 'बहुभाषी समर्थन', feature3_desc: 'इंटरफ़ेस अंग्रेजी, हिंदी, बंगाली आदि कई भाषाओं में उपलब्ध है।',
+        feature4_title: 'इंटरैक्टिव मानचित्र दृश्य', feature4_desc: 'नागरिक रिपोर्ट की गई समस्याओं को शहर के लाइव मानचित्र पर देख सकते हैं।',
+        feature5_title: 'शिकायत ट्रैकिंग', feature5_desc: 'शिकायत की स्थिति ट्रैक करें: प्रस्तुत → प्रक्रिया में → हल हो गई।',
+        feature6_title: 'पुश सूचनाएं और अलर्ट', feature6_desc: 'शिकायत की पावती और समाधान के बारे में अपडेट प्राप्त करें।',
+        feature7_title: 'उपयोगकर्ता-अनुकूल मोबाइल इंटरफ़ेस', feature7_desc: 'सभी उपकरणों के साथ संगत उत्तरदायी, मोबाइल-फर्स्ट डिज़ाइन।',
+        solutions_title: 'स्मार्टसेवा द्वारा प्रदान किए गए समाधान',
+        solution1_title: 'कुशल नागरिक समस्या रिपोर्टिंग', solution1_desc: 'नागरिक फोटो, वीडियो और स्थान विवरण के साथ तुरंत शिकायतें दर्ज कर सकते हैं। गड्ढों, टूटी स्ट्रीटलाइट्स, या कचरे के डिब्बे भरने में देरी कम करता है।',
+        solution2_title: 'वास्तविक समय ट्रैकिंग', solution2_desc: 'प्रस्तुत करने से लेकर समाधान तक शिकायत की स्थिति को ट्रैक करें, जिससे सरकारी प्रतिक्रिया में पारदर्शिता और जवाबदेही सुनिश्चित होती है।',
+        solution3_title: 'इंटरैक्टिव मैपिंग', solution3_desc: 'रंग-कोडित मार्करों वाले लाइव नक्शे रिपोर्ट की गई समस्याओं को दिखाते हैं, जिससे नागरिकों और अधिकारियों को समस्या वाले हॉटस्पॉट की पहचान करने में मदद मिलती है।',
+        solution4_title: 'बहुभाषी पहुंच', solution4_desc: 'अंग्रेजी, हिंदी, बंगाली और क्षेत्रीय भाषाओं का समर्थन करता है, जिससे सभी पृष्ठभूमि के नागरिक आसानी से रिपोर्ट कर सकते हैं और सेवाओं तक पहुंच सकते हैं।',
+        solution5_title: 'स्वचालित कार्य रूटिंग', solution5_desc: 'शिकायतें प्रकार और स्थान के आधार पर स्वचालित रूप से संबंधित विभाग को चली जाती हैं, जिससे प्रशासनिक देरी कम होती है।',
+        solution6_title: 'विश्लेषिकी और अंतर्दृष्टि', solution6_desc: 'सरकारी डैशबोर्ड सेवा वितरण और संसाधन आवंटन में सुधार के लिए रुझान, प्रतिक्रिया समय और समाधान दर प्रदर्शित करते हैं।',
+        solution7_title: 'मोबाइल और वेब पहुंच', solution7_desc: 'पूरी तरह से उत्तरदायी वेब और मोबाइल इंटरफ़ेस नागरिकों को कभी भी, कहीं भी समस्याओं की रिपोर्ट करने में सक्षम बनाता है।',
+        solution8_title: 'नागरिक-सरकार सहयोग', solution8_desc: 'नागरik मुद्दों पर वोट और टिप्पणी कर सकते हैं, जिससे अधिकारियों को तत्काल समस्याओं को प्राथमिकता देने में मदद मिलती है, विश्वास और पारदर्शिता का निर्माण होता है।',
+        datatable_title: 'शिकायत की डेटा तालिका:', datatable_total: 'कुल प्राप्त समस्याएं', datatable_solved: 'हल की गई समस्याएं', datatable_pending: 'लंबित समस्याएं',
+        about_title: 'हमारे बारे में – स्मार्टसेवा',
+        about1_desc: 'स्मार्टसेवा एक नागरिक-केंद्रित मंच है जिसे नागरिकों और स्थानीय सरकारी अधिकारियों के बीच की खाई को पाटने के लिए डिज़ाइन किया गया है। हमारा मिशन नागरिक सेवाओं को पारदर्शी, उत्तरदायी और कुशल बनाना है।',
+        about2_desc: 'वास्तविक समय में समस्या रिपोर्टिंग, इंटरेक्टिव मैप्स और बहुभाषी समर्थन के साथ, स्मार्टसेवा नागरिकों को होशियार, स्वच्छ और सुरक्षित शहरों के निर्माण में सक्रिय रूप से भाग लेने के लिए सशक्त बनाता है।',
+        about3_desc: 'प्रशासनिक पक्ष में, स्मार्टसेवा नगरपालिका के कर्मचारियों और अधिकारियों को एक केंद्रीकृत डैशबोर्ड प्रदान करता है जो शिकायत प्रबंधन को सुव्यवस्थित करता है, मुद्दों को प्राथमिकता देता है, और सरकारी जवाबदेhi बढ़ाता है।',
+        about4_desc: '<strong>हमारा दृष्टिकोण:</strong> ऐसे स्मार्ट शहर बनाना जहां नागरिकों की आवाज सुनी जाए, और नागरिक मुद्दों का त्वरित और कुशलता से समाधान हो।',
+        about5_desc: '<strong>हमारा मिशन:</strong> नागरिकों को मुद्दों की रिपोर्टिंग के लिए एक उपयोग में आसान मंच के साथ सशक्त बनाना, जबकि सरकारों को जवाबदेही, पारदर्शिता और सेवा की गुणवत्ता में सुधार के लिए उपकरण प्रदान करना।',
+        footer_title: 'स्मार्टसेवा', footer_tagline: 'नागरिकों को नागरिक मुद्दों की रिपोर्टिंग और समाधान के लिए स्मार्ट समाधानों के साथ सशक्त बनाना।', footer_links_title: 'त्वरित लिंक्स', footer_copyright: '© 2025 स्मार्टसेवा। सर्वाधिकार सुरक्षित।'
+      },
+      bh: {
+        nav_home: 'घर', nav_user_login: 'यूजर लॉगिन', nav_admin_login: 'एडमिन लॉगिन', nav_features: 'विशेषता', nav_solutions: 'समाधान', nav_complain: 'शिकायत करीं', nav_track_status: 'स्थिति ट्रैक करीं', nav_about_us: 'हमनी के बारे में', nav_contact_us: 'संपर्क करीं', nav_fetch_detail: 'विवरण ले आईं',
+        fab_missing_person: 'गुमशुदा आदमी',
+        fab_news: 'खबर',
+        fab_safety_tips: 'सुरक्षा सुझाव',
+        nav_my_complaints: 'हमर शिकायत',
+        home_welcome: 'स्मार्टसेवा में राउर स्वागत बा', home_tagline: 'कुशल सार्वजनिक सेवा समाधान खातिर राउर वन-स्टॉप प्लेटफॉर्म।', home_mission_title: 'स्मार्टसेवा', home_mission_text: '"हमनी के समाधान तिगुना असर डाले ला - सामाजिक रूप से नागरिकन के मजबूत बनावेला, आर्थिक रूप से संसाधन बचावेला, अउरी पर्यावरण के हिसाब से साफ-सुथरा अउरी हरियर समुदाय बनावेला।"',
+        features_title: '🌐 स्मार्टसेवा - नागरिक सुविधा',
+        feature1_title: 'आसान समस्या रिपोर्टिंग', feature1_desc: 'फोटो, जीपीएस लोकेशन, टेक्स्ट भा वॉयस नोट के साथ शिकायत भेजीं।',
+        feature2_title: 'रियल-टाइम लोकेशन टैगिंग', feature2_desc: 'समस्या के सही जगह खातिर ऑटोमेटिक जीपीएस टैगिंग।',
+        feature3_title: 'बहुभाषी सहायता', feature3_desc: 'इंटरफेस कई भाषा जइसे कि अंग्रेजी, हिंदी, बंगाली आदि में उपलब्ध बा।',
+        feature4_title: 'इंटरैक्टिव नक्शा', feature4_desc: 'नागरिक रिपोर्ट कइल गइल समस्या के शहर के लाइव नक्शा पर देख सकेलें।',
+        feature5_title: 'शिकायत ट्रैकिंग', feature5_desc: 'शिकायत के स्थिति ट्रैक करीं: भेजल गइल → काम जारी बा → समाधान हो गइल।',
+        feature6_title: 'पुश सूचना आ अलर्ट', feature6_desc: 'शिकायत के स्वीकार होखला आ समाधान के बारे में अपडेट पाईं।',
+        feature7_title: 'यूजर-फ्रेंडली मोबाइल इंटरफेस', feature7_desc: 'सभ डिवाइस के साथ संगत, रिस्पॉन्सिव, मोबाइल-फर्स्ट डिजाइन।',
+        solutions_title: 'स्मार्टसेवा द्वारा दिहल गइल समाधान',
+        about_title: 'हमनी के बारे में – स्मार्टसेवा',
+        footer_title: 'स्मार्टसेवा', footer_tagline: 'नागरिकन के नागरिक समस्या के रिपोर्टिंग आ समाधान खातिर स्मार्ट समाधान से सशक्त बनावल।', footer_links_title: 'तुरंत लिंक', footer_copyright: '© 2025 स्मार्टसेवा। सभे अधिकार सुरक्षित बा।'
+      },
+      bn: {
+        nav_home: 'হোম', nav_user_login: 'ব্যবহারকারী লগইন', nav_admin_login: 'অ্যাডমিন লগইন', nav_features: 'বৈশিষ্ট্য', nav_solutions: 'সমাধান', nav_complain: 'অভিযোগ', nav_track_status: 'স্ট্যাটাস ট্র্যাক', nav_about_us: 'আমাদের সম্পর্কে', nav_contact_us: 'যোগাযোগ', nav_fetch_detail: 'বিবরণ আনুন',
+        fab_missing_person: 'নিখোঁজ ব্যক্তি',
+        fab_news: 'খবর',
+        fab_safety_tips: 'নিরাপত্তা টিপস',
+        nav_my_complaints: 'আমার অভিযোগ',
+        home_welcome: 'স্মার্টসেবায় স্বাগতম', home_tagline: 'দক্ষ পাবলিক সার্ভিস সমাধানের জন্য আপনার ওয়ান-স্টপ প্ল্যাটফর্ম।', home_mission_title: 'স্মার্টসেবা', home_mission_text: '"আমাদের সমাধান একটি ত্রিগুণ প্রভাব ফেলে - সামাজিকভাবে নাগরিকদের ক্ষমতায়ন, অর্থনৈতিকভাবে সম্পদ সংরক্ষণ এবং পরিবেশগতভাবে পরিষ্কার এবং সবুজ সম্প্রদায় তৈরি করা।"',
+        features_title: '🌐 স্মার্টসেবা - নাগরিক বৈশিষ্ট্য',
+        feature1_title: 'সহজ সমস্যা রিপোর্টিং', feature1_desc: 'ছবি, জিপিএস অবস্থান, পাঠ্য বা ভয়েস নোট সহ অভিযোগ জমা দিন।',
+        feature2_title: 'রিয়েল-টাইম লোকেশন ট্যাগিং', feature2_desc: 'সঠিক সমস্যার অবস্থানের জন্য স্বয়ংক্রিয় জিপিএস ট্যাগিং।',
+        feature3_title: 'বহুভাষিক সমর্থন', feature3_desc: 'ইন্টারফেস ইংরেজি, হিন্দি, বাংলা ইত্যাদি একাধিক ভাষায় উপলব্ধ।',
+        feature4_title: 'ইন্টারেক্টিভ ম্যাপ ভিউ', feature4_desc: 'নাগরিকরা একটি লাইভ শহরের মানচিত্রে রিপোর্ট করা সমস্যা দেখতে পারেন।',
+        feature5_title: 'অভিযোগ ট্র্যাকিং', feature5_desc: 'অভিযোগের স্থিতি ট্র্যাক করুন: জমা দেওয়া → প্রক্রিয়াধীন → সমাধান হয়েছে।',
+        feature6_title: 'পুশ বিজ্ঞপ্তি এবং সতর্কতা', feature6_desc: 'অভিযোগের স্বীকৃতি এবং সমাধান সম্পর্কে আপডেট পান।',
+        feature7_title: 'ব্যবহারকারী-বান্ধব মোবাইল ইন্টারফেস', feature7_desc: 'সমস্ত ডিভাইসের সাথে সামঞ্জস্যপূর্ণ প্রতিক্রিয়াশীল, মোবাইল-প্রথম ডিজাইন।',
+        solutions_title: 'স্মার্টসেবা দ্বারা প্রদত্ত সমাধান',
+        solution1_title: 'দক্ষ নাগরিক সমস্যা রিপোর্টিং', solution1_desc: 'নাগরিকরা ছবি, ভিডিও এবং অবস্থানের বিবরণ সহ অবিলম্বে অভিযোগ জমা দিতে পারেন। গর্ত, ভাঙা রাস্তার আলো, বা উপচে পড়া আবর্জনার डिब्बेর জন্য বিলম্ব কমায়।',
+        solution2_title: 'রিয়েল-টাইম ট্র্যাকিং', solution2_desc: 'জমা দেওয়া থেকে সমাধান পর্যন্ত অভিযোগের স্থিতি ট্র্যাক করুন, सरकारी प्रतिक्रियाয় স্বচ্ছতা এবং জবাবদিহিতা নিশ্চিত করে।',
+        solution3_title: 'ইন্টারেক্টিভ ম্যাপিং', solution3_desc: 'রঙ-কোডেড মার্কার সহ লাইভ মানচিত্র রিপোর্ট করা সমস্যাগুলি দেখায়, যা नागरिक এবং কর্তৃপক্ষকে দক্ষতার সাথে সমস্যার হটস্পট সনাক্ত করতে সহায়তা করে।',
+        solution4_title: 'বহুভাষিক অ্যাক্সেস', solution4_desc: 'ইংরেজি, হিন্দি, বাংলা এবং আঞ্চলিক ভাষা সমর্থন করে, যা সমস্ত الخلفيةর নাগরিকদের সহজেই পরিষেবাগুলি রিপোর্ট করতে এবং অ্যাক্সেস করতে দেয়।',
+        solution5_title: 'স্বয়ংক্রিয় টাস্ক রাউটিং', solution5_desc: 'অভিযোগগুলি স্বয়ংক্রিয়ভাবে ধরণ এবং অবস্থানের ভিত্তিতে संबंधित বিভাগে চলে যায়, প্রশাসনিক বিলম্ব হ্রাস করে।',
+        solution6_title: 'বিশ্লেষণ এবং অন্তর্দৃষ্টি', solution6_desc: 'সরকারি ড্যাশবোর্ডগুলি পরিষেবা সরবরাহ এবং সম্পদ বরাদ্দ উন্নত করতে প্রবণতা, প্রতিক্রিয়া সময় এবং সমাধানের হার প্রদর্শন করে।',
+        solution7_title: 'মোবাইল ও ওয়েব অ্যাক্সেসিবিলিটি', solution7_desc: 'সম্পূর্ণ প্রতিক্রিয়াশীল ওয়েব এবং মোবাইল ইন্টারফেস নাগরিকদের যে কোনও সময়, যে কোনও জায়গায় સમસ્યા রিপোর্ট করতে সক্ষম করে।',
+        solution8_title: 'নাগরিক-সরকার সহযোগিতা', solution8_desc: 'নাগরিকরা সমস্যাগুলিতে ভোট দিতে এবং মন্তব্য করতে পারে, যা কর্তৃপক্ষকে জরুরি সমস্যাগুলিকে অগ্রাধিকার দিতে, বিশ্বাস এবং স্বচ্ছতা তৈরি করতে সহায়তা করে।',
+        datatable_title: 'অভিযোগের ডেটা টেবিল:', datatable_total: 'মোট প্রাপ্ত সমস্যা', datatable_solved: 'সমাধান করা সমস্যা', datatable_pending: 'মুলতুবি সমস্যা',
+        about_title: 'আমাদের সম্পর্কে – স্মার্টসেবা',
+        about1_desc: 'স্মার্টসেবা একটি নাগরিক-কেন্দ্রিক প্ল্যাটফর্ম যা नागरिक এবং স্থানীয় सरकारी কর্তৃপক্ষের মধ্যে ব্যবধান পূরণ করার জন্য ডিজাইন করা হয়েছে। আমাদের লক্ষ্য হল নাগরিক পরিষেবাগুলিকে স্বচ্ছ, প্রতিক্রিয়াশীল এবং দক্ষ করে তোলা।',
+        about2_desc: 'রিয়েল-টাইম সমস্যা রিপোর্টিং, ইন্টারেক্টিভ মানচিত্র এবং বহুভাষিক সমর্থনের সাথে, স্মার্টসেবা নাগরিকদের স্মার্ট, পরিষ্কার এবং নিরাপদ শহর তৈরিতে সক্রিয়ভাবে অংশগ্রহণ করতে सशक्त করে।',
+        about3_desc: 'প্রশাসনিক দিকে, স্মার্টসেবা পৌরসভা कर्मचारी এবং কর্তৃপক্ষকে একটি কেন্দ্রীভূত ড্যাশবোর্ড সরবরাহ করে যা অভিযোগ পরিচালনাকে सुव्यवस्थित করে, সমস্যাগুলিকে অগ্রাধিকার দেয় এবং सरकारी জবাবদিহিতা বাড়ায়।',
+        about4_desc: '<strong>আমাদের দৃষ্টি:</strong> এমন স্মার্ট শহর তৈরি করা যেখানে নাগরিকদের কথা শোনা হয় এবং নাগরিক সমস্যাগুলি দ্রুত এবং দক্ষতার সাথে সমাধান করা হয়।',
+        about5_desc: '<strong>আমাদের লক্ষ্য:</strong> নাগরিকদের সমস্যা রিপোর্টিংয়ের জন্য একটি সহজে ব্যবহারযোগ্য প্ল্যাটফর্ম দিয়ে सशक्त করা, அதே সময়ে সরকারকে প্রতিক্রিয়াশীলতা, স্বচ্ছতা এবং পরিষেবার মান উন্নত করার জন্য সরঞ্জাম সরবরাহ করা।',
+        footer_title: 'স্মার্টসেবা', footer_tagline: 'নাগরিকদের নাগরিক সমস্যা রিপোর্টিং এবং সমাধানের জন্য স্মার্ট সমাধান দিয়ে ক্ষমতায়ন করা।', footer_links_title: 'দ্রুত লিঙ্ক', footer_copyright: '© 2025 স্মার্টসেবা। সর্বস্বত্ব সংরক্ষিত।'
+      }
+    }
+    
+    function changeLanguage(lang) {
+      document.querySelectorAll('[data-translate-key]').forEach(element => {
+        const key = element.getAttribute('data-translate-key');
+        if (translations[lang] && translations[lang][key]) {
+          if (key.includes('about4_desc') || key.includes('about5_desc')) {
+            element.innerHTML = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('login') === 'success') {
+            alert('Login Successful!');
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+    
+    const fabContainer = document.querySelector('.fab-container');
+    if (fabContainer) {
+      fabContainer.addEventListener('click', () => {
+        fabContainer.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
+</html>
